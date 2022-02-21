@@ -16,6 +16,7 @@ class Auth extends BaseController {
 	protected $school;
 	protected $user;
 	protected $nowparam;
+	protected $allschool;
 	
 
 	public function __construct() {
@@ -24,19 +25,20 @@ class Auth extends BaseController {
 		$this->smarty = new Smarty();
 		$this->param = new ParamModel();
 		$this->user = new UserModel();
+		$this->school = new SchoolModel();
 
 		$this->nowparam = $this->param->getParam();
+		$this->allschool = $this->school->getAllSchool();
 		$this->smarty->assign('nowparam', $this->nowparam);
+		$this->smarty->assign('allschool', $this->allschool);
     }	
 
-	public function index(){
-		
+	public function index(){		
 		$data['google_login_url']=$this->googleauth->getLoginUrl();
 		$this->smarty->assign('data', $data);
-		$this->smarty->assign('func', 'login');
-		$this->smarty->assign('pagetitle','登入頁');
+		$this->smarty->assign('pagetitle','登入');
+		$this->smarty->assign('func','login');
 		return $this->smarty->display('auth.tpl');
-
 	}
 
 	public function oauth2callback(){
@@ -71,7 +73,7 @@ class Auth extends BaseController {
 			$this->session->set('isLoggedIn', true);
 			$this->user->save($update_data);		
 		}else{			
-			if($nowparam['autoadduser']==true){
+			if($this->nowparam['autoadduser']==true){
 				$session_data=array(
 					'openid'=>$google_data['id'],
 					'name'=>explode('@', $google_data['email'])[0],
@@ -94,12 +96,12 @@ class Auth extends BaseController {
 				$this->smarty->assign('authurl', $data['google_login_url']);
 				$this->smarty->assign('param', $this->nowparam);
 				$this->smarty->assign('msg', ['type'=>'warning','text'=>'帳號不存在，本系統不提供帳號申請，請洽主辦單位。']);
+				$this->smarty->assign('pagetitle','登入');
 				$this->smarty->assign('func', 'login');
-				$this->smarty->assign('pagetitle','登入頁');
 				return $this->smarty->display('auth.tpl');
 			}
 		}
-		if($session_data['schoolid']==''){
+		if($session_data['schoolid']=='' || $session_data['privilege']=='0'){
 			return redirect()->to(base_url('/auth/grant'));
 		}else{
 			return redirect()->to(base_url('/admin'));
@@ -113,8 +115,8 @@ class Auth extends BaseController {
 			$this->smarty->assign('data', $data);
 			$this->smarty->assign('param', $this->nowparam);
 			$this->smarty->assign('msg', ['type'=>'warning','text'=>'帳號密碼及驗證有誤！']);
+			$this->smarty->assign('pagetitle','登入');
 			$this->smarty->assign('func', 'login');
-			$this->smarty->assign('pagetitle','登入頁');
 			return $this->smarty->display('auth.tpl');
 		}else{
 			if(strtolower(end(explode('@', $logindata['a'])))=='gm.kl.edu.tw'){
@@ -122,6 +124,7 @@ class Auth extends BaseController {
 				$this->smarty->assign('data', $data);
 				$this->smarty->assign('param', $this->nowparam);
 				$this->smarty->assign('msg', ['type'=>'warning','text'=>'gm.kl.edu.tw網域請以直接認證登入！']);
+				$this->smarty->assign('pagetitle','登入');
 				$this->smarty->assign('func', 'login');
 				return $this->smarty->display('auth.tpl');
 			}else{
@@ -130,6 +133,7 @@ class Auth extends BaseController {
 					$this->smarty->assign('data', $data);
 					$this->smarty->assign('param', $this->nowparam);
 					$this->smarty->assign('msg',  ['type'=>'warning','text'=>'驗證未通過！']);
+					$this->smarty->assign('pagetitle','登入');
 					$this->smarty->assign('func', 'login');
 					return $this->smarty->display('auth.tpl');
 				}else{
@@ -139,6 +143,7 @@ class Auth extends BaseController {
 						$this->smarty->assign('data', $data);
 						$this->smarty->assign('param', $this->nowparam);
 						$this->smarty->assign('msg', ['type'=>'warning','text'=>'帳號密碼錯誤！']);
+						$this->smarty->assign('pagetitle','登入');
 						$this->smarty->assign('func', 'login');
 						return $this->smarty->display('auth.tpl');
 					}else{
@@ -163,7 +168,7 @@ class Auth extends BaseController {
 						);
 						$this->user->save($update_data);
 
-						$this->school = new SchoolModel();
+						//$this->school = new SchoolModel();
 
 						$usereduid = $this->school->getEduidFromSchoolid($theuser[0]['schoolid']);
 						if(empty($usereduid)){
@@ -361,24 +366,37 @@ class Auth extends BaseController {
 	}
 
 	public function grant(){
-		$this->school= new SchoolModel();		
-		$this->smarty->assign('allschool', $this->school->getAllSchool());
-		$this->smarty->assign('param', $this->param->getParam());
-		$this->smarty->assign('sub', 'grant');
-		return $this->smarty->display('login.tpl');
+		if($this->session->get('status')<1){
+			return redirect()->to(base_url());
+		}
+		if($this->session->get('privilege')>0 && $this->session->get('schoolid')>0){
+			return redirect()->to(base_url('/admin'));
+		}
+		$this->smarty->assign('func', 'grant');
+		$this->smarty->assign('pagetitle', '授權');
+		return $this->smarty->display('auth.tpl');
 	}
 
 	public function togrant(){
 		$request = \Config\Services::request();
-		if($this->session->get('openid')==$request->getPost('useropenid')){
-			if($newschoolid = $request->getPost('newschoolid')){
+		if($this->session->get('openid')==esc($request->getPost('useropenid'))){
+			$newschoolid = intval(esc($request->getPost('newschoolid')));
+			if($newschoolid > 0){
 				$session_data=array(
 					'schoolid'=>$newschoolid,
 					'privilege'=>'1'
 				);
 				$this->session->set($session_data);
-				$this->generalmodel->Manage('user',$session_data,array('openid'=>$this->session->get('openid')));
-				return redirect()->to('/admin/dashboard');
+				$sdata = [
+					'id'=>$this->session->get('user_id'),
+					'schoolid'=>$newschoolid,
+					'privilege'=>'1'
+				];
+				if($this->user->save($sdata)===false){
+					return redirect()->to(base_url('/auth/logout'));
+				}else{
+					return redirect()->to('/admin');				
+				}
 			}			
 		}		
 		return redirect()->to(base_url());
@@ -388,9 +406,9 @@ class Auth extends BaseController {
 		if($this->session->get('privilege')<1){
 			return redirect()->to(base_url());
 		}
-		$this->school = new SchoolModel();
+		//$this->school = new SchoolModel();
 		$this->smarty->assign('param', $this->nowparam);
-		$this->smarty->assign('allschool', $this->school->getAllSchool());
+		//$this->smarty->assign('allschool', $this->school->getAllSchool());
 		$this->smarty->assign('func', 'noticepass');
 		return $this->smarty->display('auth.tpl');
 	}

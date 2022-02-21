@@ -407,7 +407,7 @@ h6,
 .h6 {
   margin-bottom: 0.5rem;
   font-family: inherit;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.5;
   color: #32325d;
 }
@@ -21119,13 +21119,13 @@ textarea[resize="horizontal"] {
 
 p {
   font-size: 1rem;
-  font-weight: 300;
+  /*font-weight: 300;*/
   line-height: 1.7;
 }
 
 .lead {
   font-size: 1.25rem;
-  font-weight: 300;
+  /*font-weight: 300;*/
   line-height: 1.7;
   margin-top: 1.5rem;
 }
