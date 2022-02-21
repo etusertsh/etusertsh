@@ -23,7 +23,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://localhost:8080/';
+    public $baseURL = 'https://etuser.hopto.org/klexpo/';
 
     /**
      * --------------------------------------------------------------------------
@@ -69,7 +69,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $defaultLocale = 'en';
+    public $defaultLocale = 'zh-TW';
 
     /**
      * --------------------------------------------------------------------------
@@ -108,7 +108,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $appTimezone = 'America/Chicago';
+    public $appTimezone = 'Asia/Taipei';
 
     /**
      * --------------------------------------------------------------------------
@@ -136,7 +136,7 @@ class App extends BaseConfig
      *
      * @var bool
      */
-    public $forceGlobalSecureRequests = false;
+    public $forceGlobalSecureRequests = true;
 
     /**
      * --------------------------------------------------------------------------
@@ -162,7 +162,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $sessionCookieName = 'ci_session';
+    public $sessionCookieName = 'klexpo_session';
 
     /**
      * --------------------------------------------------------------------------
@@ -244,7 +244,7 @@ class App extends BaseConfig
      *
      * @deprecated use Config\Cookie::$prefix property instead.
      */
-    public $cookiePrefix = '';
+    public $cookiePrefix = 'klexpo';
 
     /**
      * --------------------------------------------------------------------------
@@ -257,7 +257,7 @@ class App extends BaseConfig
      *
      * @deprecated use Config\Cookie::$domain property instead.
      */
-    public $cookieDomain = '';
+    public $cookieDomain = 'etuser.hopto.org';
 
     /**
      * --------------------------------------------------------------------------
@@ -270,7 +270,7 @@ class App extends BaseConfig
      *
      * @deprecated use Config\Cookie::$path property instead.
      */
-    public $cookiePath = '/';
+    public $cookiePath = '/klexpo/';
 
     /**
      * --------------------------------------------------------------------------
@@ -355,7 +355,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $CSRFTokenName = 'csrf_test_name';
+    public $CSRFTokenName = 'csrf_klexpo';
 
     /**
      * --------------------------------------------------------------------------
@@ -381,7 +381,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $CSRFCookieName = 'csrf_cookie_name';
+    public $CSRFCookieName = 'csrf_cookie_klexpo';
 
     /**
      * --------------------------------------------------------------------------
