@@ -9,24 +9,24 @@
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-                        <form role="form" action="{base_url('/auth/togrant')}" method="POST" accept-charset="UTF-8">
+                        <form role="form" action="{{base_url('/auth/togrant')}}" method="POST" accept-charset="UTF-8">
                             <div class="form-group mb-3">
                                 <h5>請核對您的資料</h5>
-                                <p class="text-primary">電子郵件：{$smarty.session.email}<br>
-                                姓名：{$smarty.session.realname}</p>
+                                <p class="text-primary">電子郵件：{{$smarty.session.email}}<br>
+                                姓名：{{$smarty.session.realname}}</p>
                             <div class="form-group mb-3">
                                 <h5>請選擇您所屬的學校</h5>
                                 <select name="newschoolid" class="form-control" required>
                                 <option value=""></option>
-                                {foreach key=key item=item from=$allschool}
-                                <option value="{$key}"{if $key == $smarty.session.schoolid} selected{/if}>{$item.schooltype} / {$item.schoolfullname}</option>
-                                {/foreach}
+                                {{foreach key=key item=item from=$allschool}}
+                                <option value="{{$key}}"{{if $key == $smarty.session.schoolid}} selected{{/if}}>{{$item.schooltype}} / {{$item.schoolfullname}}</option>
+                                {{/foreach}}
                                 </select>
                             </div>
                             <div class="form-group mb-3 text-center">
                                 <button type="submit" class="btn btn-primary">確定授權</button>
                                 <input type="hidden" name="useropenid" value="{{$smarty.session.openid}}">
-                                {csrf_field()}
+                                {{csrf_field()}}
                             </div>
                         </form>
                     </div>

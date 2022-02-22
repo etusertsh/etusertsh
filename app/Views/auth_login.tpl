@@ -16,8 +16,8 @@
                     <div class="card-header bg-white pb-5">
                         <div class="text-muted text-center mb-3"><small>本市學校承辦請使用 gm.kl.edu.tw 網域認證</small></div>
                         <div class="btn-wrapper text-center">
-                            <a href="{$data.google_login_url}" class="btn btn-neutral btn-icon">
-                                <img src="{base_url('assets')}/img/gm_oauth_btn48.png">
+                            <a href="{{$data.google_login_url}}" class="btn btn-neutral btn-icon">
+                                <img src="{{base_url('assets')}}/img/gm_oauth_btn48.png">
                             </a>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                             <small>未有 gm.kl.edu.tw 之學校承辦請以下方電子郵件登入</small>
                         </div>
                         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-                        <form role="form" action="{base_url('/auth/login')}" method="POST" accept-charset="UTF-8">
+                        <form role="form" action="{{base_url('/auth/login')}}" method="POST" accept-charset="UTF-8">
                             <div class="form-group mb-3">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
@@ -49,7 +49,7 @@
                             </div>                            
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary my-4">登入</button>
-                                {csrf_field()}
+                                {{csrf_field()}}
                             </div>
                         </form>
                     </div>

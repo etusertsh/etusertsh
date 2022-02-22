@@ -45,7 +45,7 @@ class UserModel extends Model
     protected $afterDelete          = [];
 
     public function getAllUser(){
-        return $this->findAll();
+        return $this->orderBy('schoolid asc')->findAll();
     }
     public function getUserFromEmail($email){
         if(!empty($email)){

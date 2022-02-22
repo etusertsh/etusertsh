@@ -43,11 +43,8 @@ class ParamModel extends Model
     protected $afterDelete          = [];
 
     protected $params = array(
-        '0'=>'未啟用','1'=>'學校承辦','2'=>'評審','3'=>'教育行政','4'=>'系統管理'
+        '0'=>'未啟用','1'=>'學校承辦','2'=>'教育行政','3'=>'系統管理'
     );
-
-    protected $rank1 = array('特優獎', '優等獎', '佳作');
-    protected $rank2 = array('探究精神獎', '鄉土教材獎', '團體合作獎', '其他個別獎');
 
     public function getParam(){
         $data = array();
@@ -66,11 +63,5 @@ class ParamModel extends Model
         }else{
             return false;
         }
-    }
-    public function getrank1(){
-        return $this->rank1;
-    }
-    public function getrank2(){
-        return $this->rank2;
     }
 }

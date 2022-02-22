@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row row-grid align-items-center mb-5">
             <div class="col-lg-6">
-                <h3 class="text-primary font-weight-light mb-2">{$nowparam.sitetitle}</h3>
+                <h3 class="text-primary font-weight-light mb-2">{{$nowparam.sitetitle}}</h3>
                 <h4 class="mb-0 font-weight-light"></h4>
             </div>
             <div class="col-lg-6 text-lg-center btn-wrapper">
@@ -50,14 +50,14 @@
 </footer>
 </div>
 <!-- Core -->
-<script src="{base_url('assets')}/js/core/jquery.min.js"></script>
-<script src="{base_url('assets')}/js/core/popper.min.js"></script>
-<script src="{base_url('assets')}/js/core/bootstrap.min.js"></script>
+<script src="{{base_url('assets')}}/js/core/jquery.min.js"></script>
+<script src="{{base_url('assets')}}/js/core/popper.min.js"></script>
+<script src="{{base_url('assets')}}/js/core/bootstrap.min.js"></script>
 
 <!-- Optional plugins -->
-
+<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
 <!-- Argon JS -->
-<script src="{base_url('assets')}/js/argon-design-system.js"></script>
+<script src="{{base_url('assets')}}/js/argon-design-system.js"></script>
 </body>
 
 </html>

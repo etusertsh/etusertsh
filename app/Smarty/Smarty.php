@@ -19,8 +19,8 @@ class Smarty extends \Smarty
 		$this->compile_dir = $this->config->compileDir;		
 		$this->config_dir = $this->config->configDir;
 		$this->cache_dir = $this->config->cacheDir;
-		//$this->left_delimiter = '{';
-		//$this->right_delimiter = '}';
+		$this->left_delimiter = '{{';
+		$this->right_delimiter = '}}';
 		$this->loadFilter('output', 'trimwhitespace');
 		
 		$this->assign( 'APPPATH', APPPATH );
