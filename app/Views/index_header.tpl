@@ -28,4 +28,4 @@
 {{if !empty($msg)}}
   {{include file='msg.tpl'}}
 {{/if}}
-<div class="wrap">
+<div class="wrapper">

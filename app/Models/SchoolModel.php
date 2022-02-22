@@ -14,7 +14,7 @@ class SchoolModel extends Model
     protected $returnType           = 'array';
     protected $useSoftDeletes       = false;
     protected $protectFields        = true;
-    protected $allowedFields        = ['schoolid','schoolname','schoolfullname','schooltype','schooltype2','area','ps','classnum','available','openid','eduid','zip','address','tel','citycode','schoollevel'];
+    protected $allowedFields        = ['schoolid','schoolname','schoolfullname','schooltype','schooltype2','area','ps','classnum','cars','available','openid','eduid','zip','address','tel','citycode','schoollevel'];
 
     // Dates
     protected $useTimestamps        = false;

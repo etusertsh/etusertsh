@@ -30,6 +30,7 @@ class Admin extends BaseController
 		$this->allschool = $this->school->getAllSchool();
 		$this->smarty->assign('nowparam', $this->nowparam);
 		$this->smarty->assign('allschool', $this->allschool);
+		$this->smarty->assign('privilegetext', $this->param->params);
     }	
     public function index()
     {
@@ -47,7 +48,9 @@ class Admin extends BaseController
 		$action = esc($action);
 		$id = intval(esc($id));
 		if($this->session->get('privilege')=='1'){
-			$action = 'view';
+			if(!in_array($action, array('view','update'))){
+				$action = 'view';
+			}
 			$id = $this->session->get('user_id');
 		}
 		switch($action){
@@ -68,14 +71,18 @@ class Admin extends BaseController
 			case 'update':
 				if($id>0){
 					$sdata = esc($this->request->getPost());
-					if($this->user->save($sdata)===false){
-						$this->smarty->assign('msg',['type'=>'warning','text'=>'更新使用者發生錯誤！' . $this->user->error()['message']]);
-					}else{
-						$this->smarty->assign('msg',['type'=>'primary','text'=>'更新使用者成功！']);
-					}
-					$data = $this->user->getUserFromId($id);
-					$func = 'user_view';
-					$pagetitle = '管理|使用者|檢視';
+					//if($sdata['email'] != ''){
+						if($this->user->save($sdata)===false){
+							$this->smarty->assign('msg',['type'=>'warning','text'=>'更新使用者發生錯誤！' . $this->user->error()['message']]);
+						}else{
+							$this->smarty->assign('msg',['type'=>'primary','text'=>'更新使用者成功！']);
+						}
+						$data = $this->user->getUserFromId($id);
+						$func = 'user_view';
+						$pagetitle = '管理|使用者|檢視';
+					//}else{
+					//	return redirect()->to(base_url('/admin'));
+					//}
 				}else{
 					return redirect()->to(base_url('/admin'));
 				}
@@ -93,7 +100,108 @@ class Admin extends BaseController
 				$data = $this->user->getAllUser();
 				$func = 'user_list';
 				$pagetitle = '管理|使用者|列表';
-				break;			
+				break;
+			case 'addnew':
+				$sdata = esc($this->request->getPost());
+				$sdata['name'] = strtolower(explode('@', $sdata['email'])[0]);
+				$sdata['source'] = strtolower(end(explode('@', $sdata['email'])))=='gm.kl.edu.tw' ? 'gm.kl.edu.tw' : 'manual';
+				if($sdata['source'] == 'manual'){
+					$sdata['pw'] = md5($this->allschool[$sdata['schoolid']]['eduid']);
+				}
+				$sdata['privilege'] = '1';
+				$sdata['status'] = '1';
+				if($this->user->save($sdata)===false){
+					$this->smarty->assign('msg',['type'=>'warning','text'=>'新增使用者發生錯誤！' . $this->user->error()['message']]);
+				}else{
+					$this->smarty->assign('msg',['type'=>'primary', 'text'=>'新增使用者成功！']);
+				}
+				$data = $this->user->getAllUser();
+				$func = 'user_list';
+				$pagetitle = '管理|使用者|列表';
+				break;
+			case 'setprivilege_0':
+				if($id>0){
+					$sdata = ['id'=>$id, 'privilege'=>'0'];
+					if($this->user->save($sdata)===false){
+						$this->smarty->assign('msg',['type'=>'warning','text'=>'變更使用者權限發生錯誤！' . $this->user->error()['message']]);
+					}else{
+						$this->smarty->assign('msg', ['type'=>'primary','text'=>'使用者權限變更為「未啟用」！']);
+					}
+					$data = $this->user->getUserFromId($id);
+					$func = 'user_view';
+					$pagetitle = '管理|使用者|檢視';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
+			case 'setprivilege_1':
+				if($id>0){
+					$sdata = ['id'=>$id, 'privilege'=>'1'];
+					if($this->user->save($sdata)===false){
+						$this->smarty->assign('msg',['type'=>'warning','text'=>'變更使用者權限發生錯誤！' . $this->user->error()['message']]);
+					}else{
+						$this->smarty->assign('msg', ['type'=>'primary','text'=>'使用者權限變更為「學校承辦」！']);
+					}
+					$data = $this->user->getUserFromId($id);
+					$func = 'user_view';
+					$pagetitle = '管理|使用者|檢視';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
+			case 'setprivilege_2':
+				if($id>0){
+					$sdata = ['id'=>$id, 'privilege'=>'2'];
+					if($this->user->save($sdata)===false){
+						$this->smarty->assign('msg',['type'=>'warning','text'=>'變更使用者權限發生錯誤！' . $this->user->error()['message']]);
+					}else{
+						$this->smarty->assign('msg', ['type'=>'primary','text'=>'使用者權限變更為「教育行政」！']);
+					}
+					$data = $this->user->getUserFromId($id);
+					$func = 'user_view';
+					$pagetitle = '管理|使用者|檢視';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
+			case 'setprivilege_3':
+				if($id>0){
+					$sdata = ['id'=>$id, 'privilege'=>'3'];
+					if($this->user->save($sdata)===false){
+						$this->smarty->assign('msg',['type'=>'warning','text'=>'變更使用者權限發生錯誤！' . $this->user->error()['message']]);
+					}else{
+						$this->smarty->assign('msg', ['type'=>'primary','text'=>'使用者權限變更為「系統管理」！']);
+					}
+					$data = $this->user->getUserFromId($id);
+					$func = 'user_view';
+					$pagetitle = '管理|使用者|檢視';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
+			default:
+				return redirect()->to(base_url('/admin'));
+				break;
+		}
+		$this->smarty->assign('data', $data);
+		$this->smarty->assign('func', $func);
+		$this->smarty->assign('pagetitle', $pagetitle);
+		return $this->smarty->display('admin/admin.tpl');
+	}
+	public function school($action=null, $id=null){
+		if($this->session->get('privilege')<2){
+			return redirect()->to(base_url());
+		}
+		$action = esc($action);
+		$id = intval(esc($id));
+		switch($action){
+			case 'list':
+				$func = 'school_list';
+				$data = $this->school->getFullSchool();
+				$pagetitle = '管理|學校|列表';
+				break;
+			case 'update':
+				break;
 			default:
 				return redirect()->to(base_url('/admin'));
 				break;
