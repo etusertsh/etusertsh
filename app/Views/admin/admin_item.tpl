@@ -2,7 +2,7 @@
     <div class="container pt-lg-5">
         <div class="row justify-content-center">
             <div class="col">
-                <p class="h5 text-primary">{{$allschool[$smarty.session.schoolid].schoolfullname}}</p>
+                <p class="h5 text-primary">{{$pagetitle}}</p>
             </div>
         </div>
         <h4>選擇日期場次</h4>
@@ -10,13 +10,13 @@
             {{foreach item=item from=$actiondays}}
                 <div class="col-md-6 col-lg-4 p-2 mb-3">
                     <div class="card border border-light rounded shadow">
-                        <div class="card-header">
-                            <p class="h5 text-primary">{{$item.date|date_format:"%m/%d"}}</p>
+                        <div class="card-header bg-dark">
+                            <p class="h5 text-white">{{$item.date|date_format:"%m/%d"}}</p>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body bg-secondary">
                             {{foreach key=key2 item=item2 from=$actiontime}}
                                 {{if in_array($key2, $item.time)}}
-                                <a href="" class="btn btn-lg btn-{{if $key2=='AM'}}info{{else}}success{{/if}} border border-danger mx-2 mb-2">{{$item2.title}} ({{$item2.time}})</a>
+                                <a href="{{base_url('/admin/itemmanager/list')}}/{{$item.date}}/{{$key2}}" class="btn btn-lg btn-{{if $key2=='AM'}}warning{{else}}primary{{/if}} border border-danger mx-2 mb-2">{{$item2.title}} ({{$item2.time}})</a>
                                 {{else}}
                                 <button class="btn btn-lg btn-secondary mx-2 mb-2">{{$item2.title}} (不開放)</button>
                                 {{/if}}

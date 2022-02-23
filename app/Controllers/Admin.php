@@ -7,6 +7,7 @@ use App\Smarty\Smarty;
 use App\Models\ParamModel;
 use App\Models\SchoolModel;
 use App\Models\UserModel;
+use App\Models\ItemModel;
 
 class Admin extends BaseController
 {
@@ -17,6 +18,7 @@ class Admin extends BaseController
 	protected $user;
 	protected $nowparam;
 	protected $allschool;
+	protected $items;
 	
 
 	public function __construct() {
@@ -37,8 +39,10 @@ class Admin extends BaseController
         if($this->session->get('privilege')<1){
 			return redirect()->to(base_url());
 		}
-		$this->smarty->assign('pagetitle','管理');
-		$this->smarty->assign('actiontime', json_decode($this->nowparam['actiontime'],true));
+		$this->smarty->assign('pagetitle','管理|填報');
+		$this->smarty->assign('actiondays', json_decode($this->nowparam['actiondays'], true));
+        $this->smarty->assign('actiontime', json_decode($this->nowparam['actiontime'], true));
+        $this->smarty->assign('actionplace', json_decode($this->nowparam['actionplace'], true));
         return $this->smarty->display('admin/admin.tpl');
     }
 	public function user($action=null,$id=null){
@@ -286,6 +290,33 @@ class Admin extends BaseController
 		$this->smarty->assign('actiondays', json_decode($data['actiondays'], true));
         $this->smarty->assign('actiontime', json_decode($data['actiontime'], true));
         $this->smarty->assign('actionplace', json_decode($data['actionplace'], true));
+		$this->smarty->assign('pagetitle', $pagetitle);
+		return $this->smarty->display('admin/admin.tpl');
+	}
+	public function itemmanager($action=null,$itemdate=null,$itemtime=null){
+		if($this->session->get('privilege')<2){
+			return redirect()->to(base_url());
+		}
+		$this->items = new ItemModel();
+		$action = esc($action);
+		$itemdate = esc($itemdate);
+		$itemtime = esc($itemtime);
+		if($action == ''){
+			$action = 'list';
+		}
+		
+		if($itemdate == '' || $itemtime == ''){
+			$func = 'item';
+		}else{
+			$func = 'item_list';
+			$data = $this->items->getItemFromDateAndTime($itemdate, $itemtime);
+		}
+		$pagetitle = '管理|參訪場館場次';
+		$this->smarty->assign('data', $data);
+		$this->smarty->assign('func', $func);
+		$this->smarty->assign('actiondays', json_decode($this->nowparam['actiondays'], true));
+        $this->smarty->assign('actiontime', json_decode($this->nowparam['actiontime'], true));
+        $this->smarty->assign('actionplace', json_decode($this->nowparam['actionplace'], true));
 		$this->smarty->assign('pagetitle', $pagetitle);
 		return $this->smarty->display('admin/admin.tpl');
 	}

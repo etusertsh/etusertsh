@@ -43,6 +43,7 @@
                             {{if $smarty.session.privilege>1}}
                             <a href="{{base_url('/admin/user/list')}}" class="dropdown-item border-top"><i class="bi bi-people"></i> 使用者管理</a>
                             <a href="{{base_url('/admin/school/list')}}" class="dropdown-item"><i class="bi bi-building"></i> 學校管理</a>
+                            <a href="{{base_url('/admin/itemmanager/list')}}" class="dropdown-item"><i class="bi bi-calendar-check"></i> 參訪展館場次管理</a>
                             {{/if}}
                             {{if $smarty.session.privilege>2}}
                                 <a href="{{base_url('/admin/param/list')}}" class="dropdown-item border-top"><i class="bi bi-tools"></i> 系統參數</a>

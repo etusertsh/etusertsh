@@ -31,13 +31,13 @@
 <div class="section features-6">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6">
+            <div class="col-lg-7">
                 <div class="info info-horizontal info-hover-primary">
                     <div class="description pl-4">
                         <h5 class="title">活動日期</h5>
                         <div class="row">
                             {{foreach item=item from=$actiondays}}
-                                <div class="col">{{$item.date|date_format:"%m/%d"}}</div>
+                                <div class="col h5 text-success">{{$item.date|date_format:"%m/%d"}}</div>
                             {{/foreach}}
                         </div>
                     </div>
@@ -47,7 +47,7 @@
                         <h5 class="title">活動場次</h5>
                         <div class="row">
                             {{foreach item=item from=$actiontime}}
-                                <div class="col">{{$item.title}}：{{$item.time}}</div>
+                                <div class="col h5 text-info">{{$item.title}}：{{$item.time}}</div>
                             {{/foreach}}
                         </div>
                     </div>
@@ -57,13 +57,13 @@
                         <h5 class="title">參訪地點</h5>
                         <div class="row">
                             {{foreach item=item from=$actionplace}}
-                                <div class="col">{{$item.name}}</div>
+                                <div class="col"><span class="fw-bold text-primary h5">{{$item.name}}</span><br>{{$item.description}}</div>
                             {{/foreach}}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-10 mx-md-auto">
+            <div class="col-lg-5 col-10 mx-md-auto">
                 <img class="ml-lg-5" src="{{base_url('assets')}}/img/ill/ill.png" width="100%">
             </div>
         </div>
