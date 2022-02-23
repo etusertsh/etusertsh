@@ -211,4 +211,82 @@ class Admin extends BaseController
 		$this->smarty->assign('pagetitle', $pagetitle);
 		return $this->smarty->display('admin/admin.tpl');
 	}
+	public function param($action=null, $id=null){
+		if($this->session->get('privilege')<2){
+			return redirect()->to(base_url());
+		}
+		$action = esc($action);
+		$id = intval(esc($id));
+		switch($action){
+			case 'list':
+				$data = $this->param->getParam();
+				$func = 'param_list';
+				$pagetitle = '管理|系統參數';
+				break;
+			case 'update1':
+				$sdata = esc($this->request->getPost());
+				foreach($sdata as $key=>$val){
+					$this->param->set(['value'=>$val])->where('name', $key)->update();
+				}
+				$this->smarty->assign('msg',['type'=>'primary','text'=>'系統參數已更新！']);
+				$data = $this->param->getParam();
+				$this->nowparam = $data;
+				$this->smarty->assign('nowparam', $this->nowparam);
+				$func = 'param_list';
+				$pagetitle = '管理|系統參數';
+				break;
+			case 'updateactiondays':
+				$sdata = $this->request->getPost();
+				if($sdata['actiondays'] != ''){
+					$this->param->set(['value'=>$sdata['actiondays']])->where('name','actiondays')->update();
+					$this->smarty->assign('msg',['type'=>'primary','text'=>'系統參數已更新！']);
+					$data = $this->param->getParam();
+					$this->nowparam = $data;
+					$this->smarty->assign('nowparam', $this->nowparam);
+					$func = 'param_list';
+					$pagetitle = '管理|系統參數';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
+			case 'updateactiontime':
+				$sdata = $this->request->getPost();
+				if($sdata['actiontime'] != ''){
+					$this->param->set(['value'=>$sdata['actiontime']])->where('name','actiontime')->update();
+					$this->smarty->assign('msg',['type'=>'primary','text'=>'系統參數已更新！']);
+					$data = $this->param->getParam();
+					$this->nowparam = $data;
+					$this->smarty->assign('nowparam', $this->nowparam);
+					$func = 'param_list';
+					$pagetitle = '管理|系統參數';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
+			case 'updateactionplace':
+				$sdata = $this->request->getPost();
+				if($sdata['actionplace'] != ''){
+					$this->param->set(['value'=>$sdata['actionplace']])->where('name','actionplace')->update();
+					$this->smarty->assign('msg',['type'=>'primary','text'=>'系統參數已更新！']);
+					$data = $this->param->getParam();
+					$this->nowparam = $data;
+					$this->smarty->assign('nowparam', $this->nowparam);
+					$func = 'param_list';
+					$pagetitle = '管理|系統參數';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
+			default:
+				return redirect()->to(base_url('/admin'));
+				break;
+		}
+		$this->smarty->assign('data', $data);
+		$this->smarty->assign('func', $func);
+		$this->smarty->assign('actiondays', json_decode($data['actiondays'], true));
+        $this->smarty->assign('actiontime', json_decode($data['actiontime'], true));
+        $this->smarty->assign('actionplace', json_decode($data['actionplace'], true));
+		$this->smarty->assign('pagetitle', $pagetitle);
+		return $this->smarty->display('admin/admin.tpl');
+	}
 }
