@@ -16,9 +16,9 @@
                         <div class="card-body">
                             {{foreach key=key2 item=item2 from=$actiontime}}
                                 {{if in_array($key2, $item.time)}}
-                                <a href="" class="btn btn-lg btn-{{if $key2=='AM'}}info{{else}}success{{/if}} border border-danger mx-2 mb-2">{{$item2.title}} ({{$item2.time}})</a>
+                                <a href="{{base_url('/booking/book')}}/{{$schoolid}}/{{$item.date}}/{{$key2}}" class="btn btn-lg btn-{{if $key2=='AM'}}success{{else}}primary{{/if}} border border-danger mx-2 mb-2">{{$item2.title}} ({{$item2.time}})</a>
                                 {{else}}
-                                <button class="btn btn-lg btn-secondary mx-2 mb-2">{{$item2.title}} (不開放)</button>
+                                <button type='button" class="btn btn-lg btn-secondary mx-2 mb-2">{{$item2.title}} (不開放)</button>
                                 {{/if}}
                             {{/foreach}}
                         </div>

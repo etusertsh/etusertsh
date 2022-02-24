@@ -72,7 +72,7 @@ class ItemModel extends Model
     }
     public function getItemFromDateAndTime($itemdate=null, $itemtime=null){
         if(!empty(esc($itemdate)) && !empty(esc($itemtime))){
-            return $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime])->orderBy('itemtype desc, itemplace asc')->findAll();
+            return $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime])->orderBy('itemtype asc, itemplace asc')->findAll();
         }else{
             return false;
         }
@@ -87,6 +87,13 @@ class ItemModel extends Model
     public function getMultiItemFromDateAndTime($itemdate=null, $itemtime=null){
         if(!empty(esc($itemdate)) && !empty(esc($itemtime))){
             return $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime,'itemtype'=>'M'])->orderBy('itemplace asc')->findAll();
+        }else{
+            return false;
+        }
+    }
+    public function getItemFromDateAndTimeAndCode($itemdate=null, $itemtime=null, $code=null){
+        if(!empty(esc($itemdate)) && !empty(esc($itemtime)) && !empty(esc($code))){
+            return $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime, 'itemcode'=>$code])->findAll();
         }else{
             return false;
         }

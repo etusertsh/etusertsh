@@ -39,12 +39,16 @@ class Admin extends BaseController
         if($this->session->get('privilege')<1){
 			return redirect()->to(base_url());
 		}
+
+		$schoolid = $this->session->get('schoolid');
 		$this->smarty->assign('pagetitle','管理|填報');
+		$this->smarty->assign('schoolid', $schoolid);
 		$this->smarty->assign('actiondays', json_decode($this->nowparam['actiondays'], true));
         $this->smarty->assign('actiontime', json_decode($this->nowparam['actiontime'], true));
         $this->smarty->assign('actionplace', json_decode($this->nowparam['actionplace'], true));
         return $this->smarty->display('admin/admin.tpl');
     }
+	
 	public function user($action=null,$id=null){
 		if($this->session->get('privilege')<1){
 			return redirect()->to(base_url());
@@ -293,7 +297,7 @@ class Admin extends BaseController
 		$this->smarty->assign('pagetitle', $pagetitle);
 		return $this->smarty->display('admin/admin.tpl');
 	}
-	public function itemmanager($action=null,$itemdate=null,$itemtime=null){
+	public function itemmanager($action=null,$itemdate=null,$itemtime=null, $id=null){
 		if($this->session->get('privilege')<2){
 			return redirect()->to(base_url());
 		}
@@ -301,22 +305,61 @@ class Admin extends BaseController
 		$action = esc($action);
 		$itemdate = esc($itemdate);
 		$itemtime = esc($itemtime);
+		$actiondays = json_decode($this->nowparam['actiondays'], true);
+		$actiontime = json_decode($this->nowparam['actiontime'], true);
+		$actionplace = json_decode($this->nowparam['actionplace'], true);
+		$id = intval(esc($id));
 		if($action == ''){
 			$action = 'list';
+		}
+		if($action == 'batchadd'){
+			$tmp = array();
+			$addstr = esc($this->request->getPost())['addstr'];
+			$tmp = explode(' ', $addstr);
+			foreach($tmp as $addcode){
+				$old = $this->items->getItemFromDateAndTimeAndCode($itemdate,$itemtime,$addcode);
+				if(!$old[0]['id']>0){
+					$sdata = ['itemdate'=>$itemdate,'itemtime'=>$itemtime,'itemcode'=>$addcode,'subitem'=>$addcode, 'booking'=>0];
+					if(strlen($addcode)>1){
+						$code1 = substr($addcode,0,1);
+						$code2 = substr($addcode,1,1);
+						$sdata['itemtype'] = 'M';
+						$sdata['itemplace'] = $actionplace[$code1]['name'] . '+' . $actionplace[$code2]['name'];
+						$sdata['description'] = $actionplace[$code1]['description'] . '+' . $actionplace[$code2]['description'];
+						$sdata['limitnum'] = min($actionplace[$code1]['limit'], $actionplace[$code2]['limit']);
+						//print_r($sdata);
+					}else{
+						$sdata['itemtype'] = 'S';
+						$sdata['itemplace'] = $actionplace[$addcode]['name'];
+						$sdata['description'] = $actionplace[$addcode]['description'];
+						$sdata['limitnum'] = $actionplace[$addcode]['limit'];
+					}
+					$this->items->save($sdata);
+				}
+			}
+		}
+		if($action == 'delete'){
+			if($id>0){
+				$this->items->delete($id);
+			}
 		}
 		
 		if($itemdate == '' || $itemtime == ''){
 			$func = 'item';
+			$pagetitle = '管理|參訪場館場次';
 		}else{
 			$func = 'item_list';
+			$pagetitle = '管理|參訪場館場次|' . $itemdate .'|' . $actiontime[$itemtime]['title'];
 			$data = $this->items->getItemFromDateAndTime($itemdate, $itemtime);
 		}
-		$pagetitle = '管理|參訪場館場次';
+		
 		$this->smarty->assign('data', $data);
 		$this->smarty->assign('func', $func);
-		$this->smarty->assign('actiondays', json_decode($this->nowparam['actiondays'], true));
-        $this->smarty->assign('actiontime', json_decode($this->nowparam['actiontime'], true));
-        $this->smarty->assign('actionplace', json_decode($this->nowparam['actionplace'], true));
+		$this->smarty->assign('itemdate', $itemdate);
+		$this->smarty->assign('itemtime', $itemtime);
+		$this->smarty->assign('actiondays', $actiondays);
+        $this->smarty->assign('actiontime', $actiontime);
+        $this->smarty->assign('actionplace', $actionplace);
 		$this->smarty->assign('pagetitle', $pagetitle);
 		return $this->smarty->display('admin/admin.tpl');
 	}
