@@ -7,6 +7,7 @@ use App\Controllers\BaseController;
 use App\Models\ParamModel;
 use App\Models\SchoolModel;
 use App\Models\UserModel;
+use App\Models\LimitModel;
 //use App\Models\SignupformModel;
 
 class Ajaxfunc extends BaseController
@@ -20,6 +21,7 @@ class Ajaxfunc extends BaseController
     //protected $news;
     protected $school;
     protected $user;
+    protected $schoollimit;
 
     public function __construct() {
 		$this->session = \Config\Services::session();	
@@ -53,10 +55,11 @@ class Ajaxfunc extends BaseController
         }
     }
     public function schoolcar($id=null,$newnum=null){
+        $this->schoollimit = new LimitModel();
         if($id>0){
             $newnum = intval(esc($newnum));
-            $sdata = ['id'=>$id,'cars'=>$newnum];
-            if($this->school->save($sdata)===false){
+            $sdata = ['id'=>$id,'limitnum'=>$newnum, 'remain'=>$newnum];
+            if($this->schoollimit->save($sdata)===false){
                 return 'error-save';
             }else{
                 return 'ok';

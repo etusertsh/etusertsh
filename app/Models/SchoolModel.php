@@ -54,7 +54,7 @@ class SchoolModel extends Model
 
     public function getFullSchool(){
         $data = array();
-        $res = $this->orderBy('available asc, schooltype desc, eduid asc, schoolfullname asc')->findAll();
+        $res = $this->orderBy('available asc, schooltype desc, eduid asc')->findAll();
         foreach($res as $tmp){
             $data[$tmp['schoolid']]=$tmp;
         }

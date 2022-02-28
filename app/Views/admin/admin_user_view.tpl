@@ -13,7 +13,7 @@
                             </div>
                         {{/if}}
                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
+                    <div class="card-body px-lg-5 py-lg-5 bg-white">
                         {{if $smarty.session.privilege>1}}
                             <h5>僅管理權限可見</h5>
                             <a href="{{base_url('/admin/user/list')}}"
@@ -21,9 +21,10 @@
                             {{foreach key=key item=item from=$privilegetext}}
                                 {{if $key != $data.privilege}}
                                     <a href="{{base_url("/admin/user/setprivilege_$key")}}/{{$data.id}}"
-                                        class="btn btn-light mr-2">設成「{{$item}}」</a>
+                                        class="btn btn-light mr-2 mb-2">設成「{{$item}}」</a>
                                 {{/if}}
                             {{/foreach}}
+                            <hr>
                         {{/if}}
                         <form class="form" action="{{base_url('/admin/user/update')}}/{{$data.id}}" method="POST"
                             accept-charset="utf-8">

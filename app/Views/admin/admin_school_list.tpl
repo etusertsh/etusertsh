@@ -37,7 +37,7 @@
                                                 <td>{{$item.schoolfullname}}</td>
                                                 <td>{{if $item.available}}{{$item.classnum}}{{/if}}</td>
                                                 <td>{{if $item.classnum > 0}}
-                                                    <input id="schoolcar-{{$item.id}}" type="number" min="0" step="1" value="{{$item.cars|default:'0'}}" class="form-control text-center fw-bold text-primary display-4" style="width:200px;" onchange="schoolcars(this,'{{$item.id}}');"{{if $item.available == '0'}} readonly{{/if}}>
+                                                    <input id="schoolcar-{{$item.limitdata.id}}" type="number" min="0" step="1" value="{{$item.limitdata.limitnum|default:'0'}}" class="form-control text-center rounded shadow text-primary" style="width:200px; font-weight: bold; font-size: 1.2em;" onchange="schoolcars(this,'{{$item.limitdata.id}}');"{{if $item.available == '0'}} readonly{{/if}}>
                                                     {{/if}}
                                                 </td>
                                             </tr>

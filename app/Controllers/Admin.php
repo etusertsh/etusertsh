@@ -8,6 +8,7 @@ use App\Models\ParamModel;
 use App\Models\SchoolModel;
 use App\Models\UserModel;
 use App\Models\ItemModel;
+use App\Models\LimitModel;
 
 class Admin extends BaseController
 {
@@ -19,6 +20,7 @@ class Admin extends BaseController
 	protected $nowparam;
 	protected $allschool;
 	protected $items;
+	protected $schoollimit;
 	
 
 	public function __construct() {
@@ -27,6 +29,7 @@ class Admin extends BaseController
 		$this->param = new ParamModel();
 		$this->user = new UserModel();
 		$this->school = new SchoolModel();
+		$this->schoollimit = new LimitModel();
 
 		$this->nowparam = $this->param->getParam();
 		$this->allschool = $this->school->getAllSchool();
@@ -41,8 +44,10 @@ class Admin extends BaseController
 		}
 
 		$schoolid = $this->session->get('schoolid');
+		$limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
 		$this->smarty->assign('pagetitle','管理|填報');
 		$this->smarty->assign('schoolid', $schoolid);
+		$this->smarty->assign('limitdata', $limitdata);
 		$this->smarty->assign('actiondays', json_decode($this->nowparam['actiondays'], true));
         $this->smarty->assign('actiontime', json_decode($this->nowparam['actiontime'], true));
         $this->smarty->assign('actionplace', json_decode($this->nowparam['actionplace'], true));
@@ -199,13 +204,27 @@ class Admin extends BaseController
 	public function school($action=null, $id=null){
 		if($this->session->get('privilege')<2){
 			return redirect()->to(base_url());
-		}
+		}		
 		$action = esc($action);
 		$id = intval(esc($id));
 		switch($action){
 			case 'list':
 				$func = 'school_list';
 				$data = $this->school->getFullSchool();
+				foreach($data as $key=>$tmp){
+					if($tmp['available']=='1'){
+						$limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $tmp['schoolid']);
+						if($limitdata[0]['id']>0){
+							$data[$key]['limitdata'] = $limitdata[0];
+						}else{
+							$sdata = array('year'=>$this->nowparam['actionyear'], 'schoolid'=>$tmp['schoolid'],'limitnum'=>$tmp['cars'],'userd'=>'0', 'remain'=>$tmp['cars']);
+							$this->schoollimit->save($sdata);
+							$newid = $this->schoollimit->insertID();
+							$sdata['id']=$newid;
+							$data[$key]['limitdata'] = $sdata;
+						}
+					}
+				}
 				$pagetitle = '管理|學校|列表';
 				break;
 			case 'update':

@@ -34,7 +34,7 @@
             <div class="col-lg-7">
                 <div class="info info-horizontal info-hover-primary">
                     <div class="description pl-4">
-                        <h5 class="title">活動日期</h5>
+                        <h5 class="title"><i class="bi bi-calendar-event"></i> 活動日期</h5>
                         <div class="row">
                             {{foreach item=item from=$actiondays}}
                                 <div class="col h5 text-success">{{$item.date|date_format:"%m/%d"}}</div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="info info-horizontal info-hover-primary mt-5">
                     <div class="description pl-4">
-                        <h5 class="title">活動場次</h5>
+                        <h5 class="title"><i class="bi bi-clock"></i> 活動場次</h5>
                         <div class="row">
                             {{foreach item=item from=$actiontime}}
                                 <div class="col h5 text-info">{{$item.title}}：{{$item.time}}</div>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="info info-horizontal info-hover-primary mt-5">
                     <div class="description pl-4">
-                        <h5 class="title">參訪地點</h5>
+                        <h5 class="title"><i class="bi bi-geo-alt"></i> 參訪地點</h5>
                         <div class="row">
                             {{foreach item=item from=$actionplace}}
                                 <div class="col"><span class="fw-bold text-primary h5">{{$item.name}}</span><br>{{$item.description}}</div>
