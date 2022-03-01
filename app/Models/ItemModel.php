@@ -14,7 +14,7 @@ class ItemModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['itemdate','itemtime','itemtype','itemcode','itemplace','description','limitnum','booking','subitem'];
+    protected $allowedFields    = ['itemdate','itemtime','itemtype','itemcode','itemplace','description','limitnum','booking','remain','subitem'];
 
     // Dates
     protected $useTimestamps = true;
