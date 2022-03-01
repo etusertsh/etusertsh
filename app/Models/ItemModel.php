@@ -72,7 +72,12 @@ class ItemModel extends Model
     }
     public function getItemFromDateAndTime($itemdate=null, $itemtime=null){
         if(!empty(esc($itemdate)) && !empty(esc($itemtime))){
-            return $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime])->orderBy('itemtype asc, itemplace asc')->findAll();
+            $data = array(); 
+            $res = $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime])->orderBy('itemtype asc, itemplace asc')->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['itemcode']]=$tmp;
+            }
+            return $data;
         }else{
             return false;
         }

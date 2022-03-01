@@ -9,6 +9,7 @@ use App\Models\SchoolModel;
 use App\Models\UserModel;
 use App\Models\ItemModel;
 use App\Models\LimitModel;
+use App\Models\BookingModel;
 
 class Booking extends BaseController
 {
@@ -21,6 +22,7 @@ class Booking extends BaseController
 	protected $allschool;
 	protected $items;
 	protected $schoollimit;
+	protected $booking;
     
     public function __construct() {
 		$this->session = \Config\Services::session();	
@@ -30,6 +32,7 @@ class Booking extends BaseController
 		$this->school = new SchoolModel();
 		$this->schoollimit = new LimitModel();
 		$this->items = new ItemModel();
+		$this->booking = new BookingModel();
 
 		$this->nowparam = $this->param->getParam();
 		$this->allschool = $this->school->getAllSchool();
@@ -63,6 +66,36 @@ class Booking extends BaseController
 		$data = $this->items->getItemFromDateAndTime($itemdate, $itemtime);
 		$this->smarty->assign('pagetitle','參訪填報');
         $this->smarty->assign('func', 'list');
+        $this->smarty->assign('data', $data);
+		$this->smarty->assign('limitdata', $limitdata);
+		$this->smarty->assign('schoolid', $schoolid);
+		$this->smarty->assign('actiondays', $actiondays);
+        $this->smarty->assign('actiontime', $actiontime);
+        $this->smarty->assign('actionplace', $actionplace);
+		$this->smarty->assign('itemdate', $itemdate);
+		$this->smarty->assign('itemtime', $itemtime);
+		$this->smarty->assign('schoolbooking', $this->booking->getBookingFromSchoolidAndDateAndTime($schoolid, $itemdate, $itemtime));
+        return $this->smarty->display('admin/booking.tpl');
+	}
+	public function status($schoolid=null, $action=null, $id=null){
+		if($this->session->get('privilege')<1){
+			return redirect()->to(base_url());
+		}
+		if($this->session->get('privilege')=='1'){
+			$schoolid = $this->session->get('schoolid');
+		}
+		$schoolid = intval(esc($schoolid));
+		$data = $this->booking->getBookingFromSchoolid($schoolid);
+		foreach($data as $key=>$val){
+			$data[$key]['itemplace'] = $this->items->getItemFromDateAndTimeAndCode($val['itemdate'],$val['itemtime'],$val['itemcode'])[0];
+		}
+		$limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
+		$actiondays = json_decode($this->nowparam['actiondays'], true);
+		$actiontime = json_decode($this->nowparam['actiontime'], true);
+		$actionplace = json_decode($this->nowparam['actionplace'], true);
+		$id = intval(esc($id));
+		$this->smarty->assign('pagetitle','學校填報紀錄');
+        $this->smarty->assign('func', 'status');
         $this->smarty->assign('data', $data);
 		$this->smarty->assign('limitdata', $limitdata);
 		$this->smarty->assign('schoolid', $schoolid);

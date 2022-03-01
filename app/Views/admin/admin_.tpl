@@ -3,9 +3,9 @@
         <div class="row justify-content-center">
             <div class="col">
                 <p class="h4 text-primary mb-2">{{$allschool[$schoolid].schoolfullname}} <i class="bi bi-building"></i>
-                <a href="" class="btn btn-lg btn-secondary border border-default"><i class="bi bi-search"></i> 檢視填報情形</a>
+                <a href="{{base_url('/booking/status')}}/{{$schoolid}}" class="btn btn-lg btn-secondary border border-default"><i class="bi bi-search"></i> 檢視填報情形</a>
                 </p>
-                <p class="border border-default bg-secondary rounded p-3">共有 <span class="badge badge-primary"> {{$limitdata.limitnum|default: '0'}} </span> 車，已填報 <span class="badge badge-dark">{{$limitdata.userd|default: '0'}}</span> 車，剩餘 <span class="badge badge-warning">{{$limitdata.remain|default: '0'}}</span> 車需填報。</p>
+                <p class="border border-default bg-secondary rounded p-3">共有 <span class="badge badge-primary"> {{$limitdata.limitnum|default: '0'}} </span> 車，已填報 <span class="badge badge-dark">{{$limitdata.used|default: '0'}}</span> 車，剩餘 <span class="badge badge-warning">{{$limitdata.remain|default: '0'}}</span> 車需填報。</p>
             </div>
         </div>
         <h4>選擇日期場次 <i class="bi bi-calendar"></i></h4>

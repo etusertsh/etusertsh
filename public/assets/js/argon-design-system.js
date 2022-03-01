@@ -138,18 +138,18 @@ $(document).ready(function() {
 
 
   // Datepicker
-  flatpickr('.flatpickr', {});
+  //flatpickr('.flatpickr', {});
 
   // Datepicker - range
-  flatpickr('.range', {
-    mode: "range"
-  });
+  //flatpickr('.range', {
+  //  mode: "range"
+  //});
 
   // DateTimePicker
-  flatpickr('.datetimepicker', {
-    enableTime: true,
-    dateFormat: "Y-m-d H:i",
-  });
+  //flatpickr('.datetimepicker', {
+  //  enableTime: true,
+  //  dateFormat: "Y-m-d H:i",
+ // });
 
   // Activate Sliders
   ArgonKit.initSliders();
