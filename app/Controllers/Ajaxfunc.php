@@ -134,13 +134,15 @@ class Ajaxfunc extends BaseController
         }
     }
     public function renew($schoolid=null,$itemdate=null,$itemtime=null){
-        $itemdata = $this->items->getItemFromDateAndTime($itemdate, $itemtime);
-        $limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
-        $thebooking = $this->booking->getBookingFromSchoolidAndDateAndTime($schoolid,$itemdate,$itemtime);
-        $data=array('msg'=>'ok',
-        'limitdata'=>$limitdata,
-        'itemdata'=>$itemdata,
-        'booking'=>$thebooking);
+        if($schoolid>0 && !empty($itemdate) && !empty($itemtime)){
+            $itemdata = $this->items->getItemFromDateAndTime($itemdate, $itemtime);
+            $limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
+            $thebooking = $this->booking->getBookingFromSchoolidAndDateAndTime($schoolid,$itemdate,$itemtime);
+            $data=array('msg'=>'ok',
+            'limitdata'=>$limitdata,
+            'itemdata'=>$itemdata,
+            'booking'=>$thebooking);
+        }
         return json_encode($data);
     }
 
@@ -175,7 +177,7 @@ class Ajaxfunc extends BaseController
                         $this->items->save(['id'=>$itemdata[$code2]['id'], 'booking'=>$itemdata[$code2]['booking'], 'remain'=>$itemdata[$code2]['remain']]);
                     }
                     foreach($itemdata as $key=>$val){
-                        if($val['itemtype']=='M' && strpos($val['itemcode'], $itemcode)>-1){
+                        if($val['itemtype']=='M'){
                             $code1 = substr($val['itemcode'],0,1);
                             $code2 = substr($val['itemcode'],1,1);
                             $itemdata[$key]['booking'] = min(max($itemdata[$code1]['booking'], $itemdata[$code2]['booking']),$itemdata[$key]['limitnum']);
@@ -230,7 +232,7 @@ class Ajaxfunc extends BaseController
                         $this->items->save(['id'=>$itemdata[$code2]['id'], 'booking'=>$itemdata[$code2]['booking'], 'remain'=>$itemdata[$code2]['remain']]);
                     }
                     foreach($itemdata as $key=>$val){
-                        if($val['itemtype']=='M' && strpos($val['itemcode'], $itemcode)>-1){
+                        if($val['itemtype']=='M'){
                             $code1 = substr($val['itemcode'],0,1);
                             $code2 = substr($val['itemcode'],1,1);
                             $itemdata[$key]['booking'] = min(max($itemdata[$code1]['booking'], $itemdata[$code2]['booking']),$itemdata[$key]['limitnum']);

@@ -39,7 +39,7 @@
                         </a>
                         <div class="dropdown-menu">
                             <a href="{{base_url('/admin/user/view')}}/{{$smarty.session.user_id}}" class="dropdown-item"><i class="bi bi-person-badge"></i> 個人資料</a>
-                            <a href="{{base_url()}}" class="dropdown-item"><i class="bi bi-clipboard-data"></i> 學校填報情形</a>
+                            <a href="{{base_url('/booking/schoolstat')}}" class="dropdown-item"><i class="bi bi-clipboard-data"></i> 學校填報情形</a>
                             {{if $smarty.session.privilege>1}}
                             <a href="{{base_url('/admin/user/list')}}" class="dropdown-item border-top"><i class="bi bi-people"></i> 使用者管理</a>
                             <a href="{{base_url('/admin/school/list')}}" class="dropdown-item"><i class="bi bi-building"></i> 學校管理</a>

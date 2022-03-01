@@ -92,7 +92,7 @@
                     url: "{{base_url('/ajaxfunc/bookminus')}}/{{$schoolid}}/{{$itemdate}}/{{$itemtime}}/" + code,
                     dataType: "json",
                     success: function(data) {
-                        console.log(data);
+                        //console.log(data);
                         if (data.msg == 'ok') {
                             showdata(data);
                         }
@@ -136,5 +136,21 @@
                 }
                 $('#remain-' + thecode).text(item.remain);
             });
+        };
+        let renew = function(){
+            $.ajax({
+                url: "{{base_url('/ajaxfunc/renew')}}/{{$schoolid}}/{{$itemdate}}/{{$itemtime}}",
+                dataType: "json",
+                success: function(data) {
+                    //console.log(data);
+                    if (data.msg == 'ok') {
+                        showdata(data);
+                    }
+                }
+            });
+        };
+
+        window.onload = function(){
+            setInterval(renew,5000);
         };
 </script>

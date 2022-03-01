@@ -106,4 +106,20 @@ class Booking extends BaseController
 		$this->smarty->assign('itemtime', $itemtime);
         return $this->smarty->display('admin/booking.tpl');
 	}
+	public function schoolstat(){
+		if($this->session->get('privilege')<1){
+			return redirect()->to(base_url());
+		}
+		$actiondays = json_decode($this->nowparam['actiondays'], true);
+		$actiontime = json_decode($this->nowparam['actiontime'], true);
+		$actionplace = json_decode($this->nowparam['actionplace'], true);
+		$limitdata = $this->schoollimit->getLimitFromYear($this->nowparam['actionyear']);
+		$this->smarty->assign('pagetitle','學校填報情形');
+        $this->smarty->assign('func', 'schoolstat');
+		$this->smarty->assign('limitdata', $limitdata);
+		$this->smarty->assign('actiondays', $actiondays);
+        $this->smarty->assign('actiontime', $actiontime);
+        $this->smarty->assign('actionplace', $actionplace);
+        return $this->smarty->display('admin/booking.tpl');
+	}
 }
