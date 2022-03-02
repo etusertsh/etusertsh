@@ -76,4 +76,16 @@ class BookingModel extends Model
             return false;
         }
     }
+    public function getBookingFromDateAndTime($itemdate=null, $itemtime=null){
+        if(!empty($itemdate) && !empty($itemtime)){
+            $data = array();
+            $res = $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime])->orderBy('itemcode asc, schoolid asc')->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['id']]=$tmp;
+            }
+            return $data;
+        }else{
+            return false;
+        }
+    }
 }

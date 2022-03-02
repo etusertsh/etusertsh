@@ -107,7 +107,7 @@ class Booking extends BaseController
         return $this->smarty->display('admin/booking.tpl');
 	}
 	public function schoolstat(){
-		if($this->session->get('privilege')<1){
+		if($this->session->get('privilege')<2){
 			return redirect()->to(base_url());
 		}
 		$actiondays = json_decode($this->nowparam['actiondays'], true);
@@ -120,6 +120,27 @@ class Booking extends BaseController
 		$this->smarty->assign('actiondays', $actiondays);
         $this->smarty->assign('actiontime', $actiontime);
         $this->smarty->assign('actionplace', $actionplace);
+        return $this->smarty->display('admin/booking.tpl');
+	}
+	public function datetimestat(){
+		if($this->session->get('privilege')<2){
+			return redirect()->to(base_url());
+		}
+		$actiondays = json_decode($this->nowparam['actiondays'], true);
+		$actiontime = json_decode($this->nowparam['actiontime'], true);
+		$actionplace = json_decode($this->nowparam['actionplace'], true);
+		$data = array();
+		foreach($actiondays as $val){
+			foreach($val['time'] as $val2){
+				$data[$val['date']][$val2] = $this->booking->getBookingFromDateAndTime($val['date'], $val2);
+			}
+		}
+		$this->smarty->assign('pagetitle','場地填報情形');
+        $this->smarty->assign('func', 'datetimestat');
+		$this->smarty->assign('actiondays', $actiondays);
+        $this->smarty->assign('actiontime', $actiontime);
+        $this->smarty->assign('actionplace', $actionplace);
+		$this->smarty->assign('data', $data);
         return $this->smarty->display('admin/booking.tpl');
 	}
 }
