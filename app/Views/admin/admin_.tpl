@@ -1,5 +1,5 @@
 <section class="section section-shaped section-lg">
-    <div class="container pt-lg-3">
+    <div class="container-fluid pt-lg-3">
         <div class="row justify-content-center">
             <div class="col">
                 <p class="h4 text-primary mb-2">{{$allschool[$schoolid].schoolfullname}} <i class="bi bi-building"></i>

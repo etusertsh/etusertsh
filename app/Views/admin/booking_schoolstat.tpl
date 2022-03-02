@@ -7,7 +7,7 @@
             <div class="card border rounded shadow col-sm-12">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>學制</th>
@@ -22,7 +22,7 @@
                             {{foreach key=key item=item from=$allschool}}
                             <tr{{if $limitdata.$key.remain<=0}} style="background: {{if $limitdata.$key.limitnum==0}}#EEE{{else}}#FFFFCC{{/if}};"{{/if}}>
                                     <td>{{$item.schooltype}}</td>
-                                    <td>{{$item.schoolfullname}}</td>
+                                    <td class="text-primary">{{$item.schoolfullname}}</td>
                                     <td class="text-center text-primary h5">{{$limitdata.$key.limitnum}}</td>
                             <td class="text-center text-success h5"{{if $limitdata.$key.used>0}} style="background: #EEFFDD;"{{/if}}>{{$limitdata.$key.used}}</td>
                                     <td class="text-center text-danger h5">{{$limitdata.$key.remain}}</td>
