@@ -8,7 +8,7 @@
                 <p class="border border-default bg-secondary rounded p-3">共有 <span class="badge badge-primary"> {{$limitdata.limitnum|default: '0'}} </span> 車，已填報 <span class="badge badge-dark">{{$limitdata.used|default: '0'}}</span> 車，剩餘 <span class="badge badge-warning">{{$limitdata.remain|default: '0'}}</span> 車需填報。</p>
             </div>
         </div>
-        <h4>選擇日期場次 <i class="bi bi-calendar"></i></h4>
+        <h4>選擇日期場次 <i class="bi bi-calendar-event"></i></h4>
         <p class="border border-default bg-secondary rounded p-3">填報時間：{{$nowparam.begin_at}} ~ {{$nowparam.end_at}}</p>
         {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d')}}
         <div class="row">
