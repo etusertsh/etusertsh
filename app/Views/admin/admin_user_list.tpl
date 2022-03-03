@@ -25,9 +25,7 @@
                                 <tbody>
                                     {{foreach item=item from=$data}}
                                         <tr>
-                                            <td>{{if $item.profile_pic != ''}}<img src="{{$item.profile_pic}}"
-                                                        class="rounded img-thumbnail border border-light" width="64"
-                                                    alt="{$item.name}">{{/if}}</td>
+                                            <td>{{if $item.profile_pic != ''}}<a href="{{base_url('/admin/user/view')}}/{{$item.id}}" class="avatar avatar-xs rounded-circle"><img src="{{$item.profile_pic}}" alt="{$item.name}"></a>{{/if}}</td>
                                             <td><span
                                                     class="badge badge-{{if $item.privilege == '1'}}primary{{elseif $item.privilege=='3'}}warning{{else}}success{{/if}}">{{$privilegetext[$item.privilege]}}</span>
                                             </td>
