@@ -15,7 +15,7 @@
                         <p class="text-right d-print-none"><a href="{{base_url('/booking/schoolstat')}}"
                                 class="btn btn-warning">返回學校列表</a></p>
                     {{/if}}
-                    {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d')}}
+                    {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d') || $smarty.session.privilege > 1}}
                     <div class="table-responsive">
                         <table class="table table-striped table-hover">
                             <thead>

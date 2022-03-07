@@ -1,5 +1,5 @@
 <section class="section section-shaped section-lg">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col">
                 <p class="h4 text-primary mb-2"><i class="bi bi-building"></i> {{$allschool[$schoolid].schoolfullname}} 
@@ -17,7 +17,7 @@
         <h4 class="text-dark mb-3"><i class="bi bi-calendar-check"></i> {{$itemdate}} {{$actiontime.$itemtime.title}}
         </h4>
         <p class="text-right"><a href="#selectdatetime" class="btn btn-primary">選擇其他場次</a></p>
-        {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d')}}
+        {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d') || $smarty.session.privilege > 1}}
         {{if $signable}}
             <div class="row mb-3">
                 {{foreach item=item from=$data}}

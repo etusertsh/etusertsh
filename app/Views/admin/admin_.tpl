@@ -1,5 +1,5 @@
 <section class="section section-shaped section-lg">
-    <div class="container-fluid pt-lg-3">
+    <div class="container pt-lg-3">
         <div class="row justify-content-center">
             <div class="col">
                 <p class="h4 text-primary mb-2">{{$allschool[$schoolid].schoolfullname}} <i class="bi bi-building"></i>
@@ -10,7 +10,7 @@
         </div>
         <h4>選擇日期場次 <i class="bi bi-calendar-event"></i></h4>
         <p class="border border-default bg-secondary rounded p-3">填報時間：{{$nowparam.begin_at}} ~ {{$nowparam.end_at}}</p>
-        {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d')}}
+        {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d') || $smarty.session.privilege > 1}}
         <div class="row">
             {{if $signable}}
             {{foreach item=item from=$actiondays}}
