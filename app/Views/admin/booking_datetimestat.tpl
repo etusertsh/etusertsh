@@ -22,9 +22,12 @@
                                         <td>{{$key}}</td>
                                         <td>{{$actiontime.$key2.title}}</td>
                                         <td>
+                                        {{$itemcount = array()}}
                                         {{foreach item=item3 from=$item2}}
-                                            <span class="badge badge-{{cycle values='primary,success,info,warning'}} mx-1">{{$allschool[$item3.schoolid].schoolname}}：{{$item3.itemcode}} ({{$item3.num}})</span>
+                                            <span class="badge badge-{{cycle values='primary,success,info,warning'}} mx-1 mb-2">{{$allschool[$item3.schoolid].schoolname}}：{{$item3.itemcode}} ({{$item3.num}})</span>
+                                            {{$itemcount[$item3.itemcode] = $itemcount[$item3.itemcode] + $item3.num}}
                                         {{/foreach}}
+                                    <p>{{foreach key=key4 item=item4 from=$itemcount}}（{{$key4}}：{{$item4}}）  {{/foreach}}</p>
                                         </td>
                                     </tr>
                                     {{/foreach}}
