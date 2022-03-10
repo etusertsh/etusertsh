@@ -18,10 +18,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{$predate = ''}}
                                 {{foreach item=item from=$actiondays}}
                                     {{foreach item=item2 from=$item.time}}
                                         <tr>
-                                            <td>{{$item.date|date_format:'%m/%d'}}</td>
+                                            <td>
+                                                {{if $predate != $item.date}}
+                                                    {{$item.date|date_format:'%m/%d'}}
+                                                {{/if}}
+                                            </td>
                                             <td>{{$actiontime[$item2].title}}</td>
                                             {{foreach key=key item=item3 from=$rowitem}}
                                                 {{$num = $data[$item.date].$item2.$key}}
@@ -34,17 +39,19 @@
                                                     {{if $num > 0}}
                                                         {{$num}} ({{$people}})
                                                     {{/if}}
-                                                    </td>
-                                                {{/foreach}}
-                                            </tr>
-                                        {{/foreach}}
+                                                </td>
+                                            {{/foreach}}
+                                        </tr>
+                                        {{$predate = $item.date}}
                                     {{/foreach}}
-                                </tbody>
-                            </table>
-                            <p class="text-right text-info"><small>統計時間：{{$smarty.now|date_format:'%Y-%m-%d %H:%M'}}</small></p>
-                        </div>
+                                {{/foreach}}
+                            </tbody>
+                        </table>
+                        <p class="text-right text-info"><small>統計時間：{{$smarty.now|date_format:'%Y-%m-%d %H:%M'}}</small>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>

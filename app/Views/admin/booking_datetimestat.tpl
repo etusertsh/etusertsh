@@ -1,5 +1,5 @@
 <section class="section section-shaped section-lg">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-sm-12 mb-3">
                 <p class="h4 mb-2">{{$pagetitle}}</p>
@@ -16,20 +16,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{$predate = ''}}
                                 {{foreach key=key item=item from=$data}}
                                     {{foreach key=key2 item=item2 from=$item}}
-                                    <tr>
-                                        <td>{{$key}}</td>
-                                        <td>{{$actiontime.$key2.title}}</td>
-                                        <td>
-                                        {{$itemcount = array()}}
-                                        {{foreach item=item3 from=$item2}}
-                                            <span class="badge badge-{{cycle values='primary,success,info,warning'}} mx-1 mb-2">{{$allschool[$item3.schoolid].schoolname}}：{{$item3.itemcode}} ({{$item3.num}})</span>
-                                            {{$itemcount[$item3.itemcode] = $itemcount[$item3.itemcode] + $item3.num}}
-                                        {{/foreach}}
-                                    <p>{{foreach key=key4 item=item4 from=$itemcount}}（{{$key4}}：{{$item4}}）  {{/foreach}}</p>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td nowrap>
+                                                {{if $key != $predate}}
+                                                    {{$key|date_format:'%m/%d'}}
+                                                {{/if}}
+                                            </td>
+                                            <td nowrap>{{$actiontime.$key2.title}}</td>
+                                            <td>
+                                                {{$itemcount = array()}}
+                                                {{foreach item=item3 from=$item2}}
+                                                    <span
+                                                        class="badge badge-{{cycle values='primary,success,info,warning'}} mx-1 mb-2">{{$allschool[$item3.schoolid].schoolname}}：{{$item3.itemcode}}
+                                                        ({{$item3.num}})</span>
+                                                    {{$itemcount[$item3.itemcode] = $itemcount[$item3.itemcode] + $item3.num}}
+                                                {{/foreach}}
+                                                <p>{{foreach key=key4 item=item4 from=$itemcount}}（{{$key4}}：{{$item4}}）
+                                                    {{/foreach}}</p>
+                                            </td>
+                                        </tr>
+                                        {{$predate = $key}}
                                     {{/foreach}}
                                 {{/foreach}}
                             </tbody>
