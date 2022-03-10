@@ -23,8 +23,8 @@
                                 <div class="col">
                                     <label>是否autoadduser</label>
                                     <select name="autoadduser" class="form-control" required>
-                                        <option value="true" {{if $data.autoadduser==true}} selected{{/if}}>是</option>
-                                        <option value="false" {{if $data.autoadduser == false}} selected{{/if}}>否
+                                        <option value="true" {{if $data.autoadduser=='true'}} selected{{/if}}>是</option>
+                                        <option value="false" {{if $data.autoadduser == 'false'}} selected{{/if}}>否
                                         </option>
                                     </select>
                                 </div>

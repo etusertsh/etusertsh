@@ -57,7 +57,7 @@
                         <h5 class="title"><i class="bi bi-geo-alt"></i> 參訪地點</h5>
                         <div class="row">
                             {{foreach item=item from=$actionplace}}
-                                <div class="col"><span class="fw-bold text-primary h5">{{$item.name}}</span><br>{{$item.description}}</div>
+                                <div class="col-4 mb-3"><span class="fw-bold text-primary h5">{{$item.name}}</span><br>{{$item.description}}</div>
                             {{/foreach}}
                         </div>
                     </div>
