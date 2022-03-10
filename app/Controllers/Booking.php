@@ -143,4 +143,27 @@ class Booking extends BaseController
 		$this->smarty->assign('data', $data);
         return $this->smarty->display('admin/booking.tpl');
 	}
+	public function datetimenum(){
+		if($this->session->get('privilege')<2){
+			return redirect()->to(base_url());
+		}
+		$actiondays = json_decode($this->nowparam['actiondays'], true);
+		$actiontime = json_decode($this->nowparam['actiontime'], true);
+		$actionplace = json_decode($this->nowparam['actionplace'], true);
+		$data = array();
+		foreach($actiondays as $val){
+			foreach($val['time'] as $val2){
+				$data[$val['date']][$val2]  = $this->booking->getSumFromDateAndTime($val['date'], $val2);
+			}
+		}
+		$rowitem = $this->items->getItemFromDateAndTime($val['date'], $val2);
+		$this->smarty->assign('pagetitle','車次人數情形');
+        $this->smarty->assign('func', 'datetimenum');
+		$this->smarty->assign('actiondays', $actiondays);
+        $this->smarty->assign('actiontime', $actiontime);
+        $this->smarty->assign('actionplace', $actionplace);
+		$this->smarty->assign('rowitem', $rowitem);
+		$this->smarty->assign('data', $data);
+        return $this->smarty->display('admin/booking.tpl');
+	}
 }

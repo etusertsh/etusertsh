@@ -88,4 +88,16 @@ class BookingModel extends Model
             return false;
         }
     }
+    public function getSumFromDateAndTime($itemdate = null, $itemtime = null){
+        if(!empty($itemdate) && !empty($itemtime)){
+            $data = array();
+            $res = $this->selectSum('num')->select('itemcode')->groupBy('itemcode')->where(['itemdate'=>$itemdate, 'itemtime'=>$itemtime])->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['itemcode']] = $tmp['num'];
+            }
+            return $data;
+        }else{
+            return false;
+        }
+    }
 }
