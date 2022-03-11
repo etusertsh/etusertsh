@@ -23,7 +23,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'https://etuser.hopto.org/klexpo/';
+    public $baseURL = 'https://sup.kl.edu.tw/klexpo/';
 
     /**
      * --------------------------------------------------------------------------

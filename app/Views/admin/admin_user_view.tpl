@@ -33,6 +33,7 @@
                                     {{if $smarty.session.privilege>1}}
                                         <label>學校/單位</label>
                                         <select name="schoolid" class="form-control" required>
+                                            <option value="">未設定</option>
                                             {{foreach key=key item=item from=$allschool}}
                                                 <option value="{{$key}}" {{if $key == $data.schoolid}} selected{{/if}}>
                                                     {{$item.schooltype}} / {{$item.schoolfullname}}</option>
