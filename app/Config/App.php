@@ -23,7 +23,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'https://etuser.hopto.org/klexpo/';
+    public $baseURL = 'https://etuser.hopto.org/mst_tour/';
 
     /**
      * --------------------------------------------------------------------------
@@ -162,7 +162,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $sessionCookieName = 'klexpo_session';
+    public $sessionCookieName = 'msttour_session';
 
     /**
      * --------------------------------------------------------------------------
@@ -244,7 +244,7 @@ class App extends BaseConfig
      *
      * @deprecated use Config\Cookie::$prefix property instead.
      */
-    public $cookiePrefix = 'klexpo';
+    public $cookiePrefix = 'mst_tour';
 
     /**
      * --------------------------------------------------------------------------
@@ -270,7 +270,7 @@ class App extends BaseConfig
      *
      * @deprecated use Config\Cookie::$path property instead.
      */
-    public $cookiePath = '/klexpo/';
+    public $cookiePath = '/mst_tour/';
 
     /**
      * --------------------------------------------------------------------------
@@ -355,7 +355,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $CSRFTokenName = 'csrf_klexpo';
+    public $CSRFTokenName = 'csrf_msttour';
 
     /**
      * --------------------------------------------------------------------------
@@ -381,7 +381,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $CSRFCookieName = 'csrf_cookie_klexpo';
+    public $CSRFCookieName = 'csrf_cookie_msttour';
 
     /**
      * --------------------------------------------------------------------------

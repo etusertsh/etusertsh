@@ -33,9 +33,9 @@ class Database extends Config
     public $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => 'klexpouser',
-        'password' => 'iaSZv6YnP0jvXkme',
-        'database' => 'klexpodb',
+        'username' => 'mst_tour_user',
+        'password' => 'MfGKoq1k9kjyAVXc',
+        'database' => 'mst_tour_db',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
