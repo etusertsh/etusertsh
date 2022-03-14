@@ -1,5 +1,5 @@
 {{include file='index_header.tpl'}}
-<div class="section section-hero section-shaped">
+<div class="section section-hero section-shaped" style="background: url({{base_url('assets/img')}}/wave-bg.png) no-repeat center 110%;">
     <div class="page-header">
         <div class="container shape-container d-flex align-items-center py-lg">
             <div class="col px-0">
