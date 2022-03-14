@@ -102,7 +102,7 @@ class Admin extends BaseController
 				break;
 			case 'delete':
 				if($id>0){
-					if($this->user->delete($id)===falae){
+					if($this->user->delete($id)===false){
 						$this->smarty->assign('msg',['type'=>'warning','text'=>'刪除使用者發生錯誤！' . $this->user->error()['message']]);
 					}else{
 						$this->smarty->assign('msg',['type'=>'primary','text'=>'刪除使用者成功！']);
