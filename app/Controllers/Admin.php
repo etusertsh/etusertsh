@@ -352,6 +352,7 @@ class Admin extends BaseController
 						$sdata['itemplace'] = $actionplace[$addcode]['name'];
 						$sdata['description'] = $actionplace[$addcode]['description'];
 						$sdata['limitnum'] = $actionplace[$addcode]['limit'];
+						$sdata['remain'] = $actionplace[$addcode]['limit'];
 					}
 					$this->items->save($sdata);
 				}

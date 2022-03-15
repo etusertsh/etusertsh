@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-dark bg-success py-2">
+<nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-dark bg-info py-2">
     <div class="container">
         <a class="navbar-brand mr-lg-5" href="{{base_url()}}">
             <img src="{{base_url('assets')}}/img/brand/kl_logo_small.jpg">

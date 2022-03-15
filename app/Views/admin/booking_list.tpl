@@ -7,16 +7,14 @@
                         class="btn btn-lg btn-secondary border border-default"><i class="bi bi-search"></i>
                         檢視填報情形</a>
                 </p>
-                <p class="border border-default bg-secondary rounded p-3">共有 <span class="badge badge-primary">
-                        {{$limitdata.limitnum|default: '0'}} </span> 車，已填報 <span id="schoolused"
-                        class="badge badge-dark">{{$limitdata.used|default: '0'}}</span> 車，剩餘 <span id="schoolremain"
-                        class="badge badge-warning">{{$limitdata.remain|default: '0'}}</span> 車需填報。<br>
+                <p class="border border-default bg-secondary rounded p-3">已填報 <span id="schoolused"
+                        class="badge badge-dark">{{$limitdata.used|default: '0'}}</span> 人。
                         請依需求選擇各展館進行填報加減。</p>
             </div>
         </div>
         <h4 class="text-dark mb-3"><i class="bi bi-calendar-check"></i> {{$itemdate}} {{$actiontime.$itemtime.title}}
         </h4>
-        <p class="text-right"><a href="#selectdatetime" class="btn btn-primary">選擇其他場次</a></p>
+        <p class="text-right"><a href="{{base_url('/admin')}}" class="btn btn-primary">選擇其他場次</a></p>
         {{$signable = ($smarty.now|date_format:'%Y%m%d' >= $nowparam.begin_at|date_format:'%Y%m%d' && $smarty.now|date_format:'%Y%m%d' <= $nowparam.end_at|date_format:'%Y%m%d') || $smarty.session.privilege > 1}}
         {{if $signable}}
             <div class="row mb-3">
@@ -159,7 +157,7 @@
         };
 
         window.onload = function() {
-            setInterval(renew, 5000);
+            //setInterval(renew, 5000);
         };
     </script>
 {{/if}}

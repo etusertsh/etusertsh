@@ -1,5 +1,5 @@
 {{include file='index_header.tpl'}}
-<div class="section section-hero section-shaped" style="background: url({{base_url('assets/img')}}/wave-bg.png) no-repeat center 110%;">
+<div class="section section-hero section-shaped" style="background: url({{base_url('assets/img')}}/wave-bg.png) no-repeat center 120%;">
     <div class="page-header">
         <div class="container shape-container d-flex align-items-center py-lg">
             <div class="col px-0">
@@ -24,47 +24,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="section features-6">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <div class="info info-horizontal info-hover-primary">
-                    <div class="description pl-4">
-                        <h5 class="title"><i class="bi bi-calendar-event"></i> 活動日期</h5>
-                        <div class="row">
-                            {{foreach item=item from=$actiondays}}
-                                <div class="col h5 text-success">{{$item.date|date_format:"%m/%d"}}</div>
-                            {{/foreach}}
-                        </div>
-                    </div>
-                </div>
-                <div class="info info-horizontal info-hover-primary mt-5">
-                    <div class="description pl-4">
-                        <h5 class="title"><i class="bi bi-clock"></i> 活動場次</h5>
-                        <div class="row">
-                            {{foreach item=item from=$actiontime}}
-                                <div class="col h5 text-info">{{$item.title}}：{{$item.time}}</div>
-                            {{/foreach}}
-                        </div>
-                    </div>
-                </div>
-                <div class="info info-horizontal info-hover-primary mt-5">
-                    <div class="description pl-4">
-                        <h5 class="title"><i class="bi bi-geo-alt"></i> 參訪地點</h5>
-                        <div class="row">
-                            {{foreach item=item from=$actionplace}}
-                                <div class="col-4 mb-3"><span class="fw-bold text-primary h5">{{$item.name}}</span><br>{{$item.description}}</div>
-                            {{/foreach}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5 col-10 mx-md-auto">
-                <img class="ml-lg-5" src="{{base_url('assets')}}/img/ill/ill.png" width="100%">
             </div>
         </div>
     </div>
