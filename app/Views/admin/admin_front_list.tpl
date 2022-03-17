@@ -39,7 +39,6 @@
                                 <a href="#signup" value="{{$item|date_format:'%m/%d'}}"
                                     class="btn btn-info rounded mb-1" onclick="selectdate('{{$item}}');">{{$item|date_format:'%m/%d'}}</a><br>
                                 剩餘：<span class="badge badge-success mb-1" id="remain_{{$item}}">{{$itemdata[$item].remain}}</span><br>已填：<span class="badge badge-primary mb-1" id="booking_{{$item}}">{{$bookingdata[$item].num|default: '0'}}</span>
-
                             </div>
                         </div>
                     </div>
@@ -58,13 +57,14 @@
             <div class="col-12">
                 <div class="card border rounded shadow">                    
                     <div class="card-body">
-                        <form class="form">
+                        <form class="form" action="{{base_url('/booking/update')}}/{{$schoolid}}" method="post" accept-charset="utf-8">
                             <label class="form-label h5">日期</label>
-                            <input type="date" id="viewdate" name="viewdate" value="" class="form-control" onclick="return false;">
+                            <input type="date" id="viewdate" name="itemdate" value="" required class="form-control" onclick="return false;">
                             <label class="form-label h5 mt-3">上限：<span id="limitnum" class="text-danger">200</span></label><br>
                             <label class="form-label h5 mt-3">參訪人數</label>
-                            <input type="number" id="num" name="num" step="1" min="0" max="200" value="0" class="form-control text-primary text-center fw-bold" readonly="readonly" style="font-size: 13pt;">
+                            <input type="number" id="num" name="num" step="1" min="0" max="200" value="" class="form-control text-primary text-center fw-bold" required readonly="readonly" style="font-size: 13pt;">
                             <button type="submit" class="btn btn-lg btn-warning rounded shadow mt-3 mx-auto">送出</button>
+                            <input type="hidden" name="schoolid" value="{{$schoolid}}">
                             {{csrf_field()}}
                         </form>
                     </div>

@@ -64,6 +64,13 @@ class BookingModel extends Model
             return false;
         }
     }
+    public function getBookingFromSchoolidAndDate($schoolid=null, $itemdate=null){
+        if($schoolid > 0 && $itemdate != ''){
+            return $this->where(['schoolid'=>$schoolid, 'itemdate'=> $itemdate])->findAll()[0];
+        }else{
+            return false;
+        }
+    }
     public function getBookingFromSchoolidAndDateAndTime($schoolid=null, $itemdate=null, $itemtime=null){
         if($schoolid>0 && !empty($itemdate) && !empty($itemtime)){
             $data = array();
@@ -91,7 +98,7 @@ class BookingModel extends Model
     public function getBookingFromDate($itemdate=null){
         if(!empty($itemdate)){
             $data = array();
-            $res = $this->where('itemdate', $itemdate)->orderBy('itemtime asc, itemcode asc, schoolid asc')->findAll();
+            $res = $this->where('itemdate', $itemdate)->orderBy('schoolid asc')->findAll();
             foreach($res as $tmp){
                 $data[$tmp['id']]=$tmp;
             }
@@ -120,6 +127,21 @@ class BookingModel extends Model
                 $data[$tmp['itemcode']] = $tmp['num'];
             }
             return $data;
+        }else{
+            return false;
+        }
+    }
+    public function getSumBySchoolid(){
+        $data = array();
+        $res = $this->selectSum('num')->select('schoolid')->groupBy('schoolid')->findAll();
+        foreach($res as $tmp){
+            $data[$tmp['schoolid']]=$tmp;
+        }
+        return $data;
+    }
+    public function getSumFromDate($itemdate=null){
+        if(!empty($itemdate)){
+            return $this->selectSum('num')->where('itemdate',$itemdate)->findAll()[0];
         }else{
             return false;
         }

@@ -51,7 +51,7 @@ class ItemModel extends Model
     }
     public function getItemFromDate($itemdate=null){
         if(!empty(esc($itemdate))){
-            return $this->where('itemdate',$itemdate)->orderBy('itemtime asc, itemtype desc, itemplace asc')->findAll();
+            return $this->where('itemdate',$itemdate)->orderBy('itemtime asc, itemtype desc, itemplace asc')->findAll()[0];
         }else{
             return false;
         }

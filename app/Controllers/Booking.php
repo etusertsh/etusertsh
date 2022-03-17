@@ -85,41 +85,23 @@ class Booking extends BaseController
 			$schoolid = $this->session->get('schoolid');
 		}
 		$schoolid = intval(esc($schoolid));
-		$data = $this->booking->getBookingFromSchoolid($schoolid);
-		foreach($data as $key=>$val){
-			$data[$key]['itemplace'] = $this->items->getItemFromDateAndTimeAndCode($val['itemdate'],$val['itemtime'],$val['itemcode'])[0];
-		}
-		$limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
-		$actiondays = json_decode($this->nowparam['actiondays'], true);
-		$actiontime = json_decode($this->nowparam['actiontime'], true);
-		$actionplace = json_decode($this->nowparam['actionplace'], true);
+		$action = esc($action);
 		$id = intval(esc($id));
+		$data = $this->booking->getBookingFromSchoolid($schoolid);
 		$this->smarty->assign('pagetitle','學校填報紀錄');
         $this->smarty->assign('func', 'status');
         $this->smarty->assign('data', $data);
-		$this->smarty->assign('limitdata', $limitdata);
 		$this->smarty->assign('schoolid', $schoolid);
-		$this->smarty->assign('actiondays', $actiondays);
-        $this->smarty->assign('actiontime', $actiontime);
-        $this->smarty->assign('actionplace', $actionplace);
-		$this->smarty->assign('itemdate', $itemdate);
-		$this->smarty->assign('itemtime', $itemtime);
         return $this->smarty->display('admin/booking.tpl');
 	}
 	public function schoolstat(){
 		if($this->session->get('privilege')<2){
 			return redirect()->to(base_url());
 		}
-		$actiondays = json_decode($this->nowparam['actiondays'], true);
-		$actiontime = json_decode($this->nowparam['actiontime'], true);
-		$actionplace = json_decode($this->nowparam['actionplace'], true);
-		$limitdata = $this->schoollimit->getLimitFromYear($this->nowparam['actionyear']);
+		$data = $this->booking->getSumBySchoolid();
 		$this->smarty->assign('pagetitle','學校填報情形');
         $this->smarty->assign('func', 'schoolstat');
-		$this->smarty->assign('limitdata', $limitdata);
-		$this->smarty->assign('actiondays', $actiondays);
-        $this->smarty->assign('actiontime', $actiontime);
-        $this->smarty->assign('actionplace', $actionplace);
+		$this->smarty->assign('data', $data);
         return $this->smarty->display('admin/booking.tpl');
 	}
 	public function datetimestat(){
@@ -127,20 +109,15 @@ class Booking extends BaseController
 			return redirect()->to(base_url());
 		}
 		$actiondays = json_decode($this->nowparam['actiondays'], true);
-		$actiontime = json_decode($this->nowparam['actiontime'], true);
-		$actionplace = json_decode($this->nowparam['actionplace'], true);
-		$data = array();
-		foreach($actiondays as $val){
-			foreach($val['time'] as $val2){
-				$data[$val['date']][$val2] = $this->booking->getBookingFromDateAndTime($val['date'], $val2);
-			}
+		$sdata = esc($this->request->getPost());
+		if(!empty($sdata['itemdate'])){		
+			$data = $this->booking->getBookingFromDate($sdata['itemdate']);
 		}
-		$this->smarty->assign('pagetitle','場地填報情形');
+		$this->smarty->assign('pagetitle',$sdata['itemdate'] . '學校參訪人數表');
         $this->smarty->assign('func', 'datetimestat');
 		$this->smarty->assign('actiondays', $actiondays);
-        $this->smarty->assign('actiontime', $actiontime);
-        $this->smarty->assign('actionplace', $actionplace);
 		$this->smarty->assign('data', $data);
+		$this->smarty->assign('itemdate', $sdata['itemdate']);
         return $this->smarty->display('admin/booking.tpl');
 	}
 	public function datetimenum(){
@@ -164,6 +141,50 @@ class Booking extends BaseController
         $this->smarty->assign('actionplace', $actionplace);
 		$this->smarty->assign('rowitem', $rowitem);
 		$this->smarty->assign('data', $data);
+        return $this->smarty->display('admin/booking.tpl');
+	}
+	public function update($schoolid=null){
+		if($this->session->get('privilege')<1){
+			return redirect()->to(base_url());
+		}
+		if($this->session->get('privilege')=='1'){
+			$schoolid = $this->session->get('schoolid');
+		}
+		if($schoolid == ''){
+			$schoolid = $this->session->get('schoolid');
+		}
+		$sdata = esc($this->request->getPost());
+		if($sdata['schoolid'] != $schoolid){
+			return redirect()->to(base_url());
+		}
+		$bookingdata = $this->booking->getBookingFromSchoolidAndDate($schoolid, $sdata['itemdate']);
+		$itemdata = $this->items->getItemFromDate($sdata['itemdate']);
+		if($bookingdata['id']>0){
+			if($sdata['num']=='0'){
+				$this->booking->delete($bookingdata['id']);
+			}elseif($sdata['num']>0){
+				if($sdata['num'] > $bookingdata['num']){
+					if($itemdata['remain'] >= ($sdata['num']-$bookingdata['num'])){
+						$this->booking->save(['id'=>$bookingdata['id'], 'num'=>$sdata['num']]);
+					}
+				}else{
+					$this->booking->save(['id'=>$bookingdata['id'], 'num'=>$sdata['num']]);
+				}
+			}
+		}else{
+			if($sdata['num']>0){
+				if($itemdata['remain'] >= $sdata['num']){
+					$this->booking->save($sdata);
+				}
+			}
+		}
+		$bookingsum = $this->booking->getSumFromDate($sdata['itemdate']);
+		$this->items->save(['id'=>$itemdata['id'], 'booking'=>$bookingsum['num'], 'remain'=>($itemdata['limitnum']-$bookingsum['num'])]);
+		$data = $this->booking->getBookingFromSchoolid($schoolid);
+		$this->smarty->assign('pagetitle','學校填報紀錄');
+        $this->smarty->assign('func', 'status');
+        $this->smarty->assign('data', $data);
+		$this->smarty->assign('schoolid', $schoolid);
         return $this->smarty->display('admin/booking.tpl');
 	}
 }

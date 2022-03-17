@@ -19,7 +19,6 @@
                                             <th>學制</th>
                                             <th>學校名稱</th>
                                             <th>班級數</th>
-                                            <th>單位數</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -36,10 +35,6 @@
                                                 <td>{{$item.schooltype}}</td>
                                                 <td>{{$item.schoolfullname}}</td>
                                                 <td>{{if $item.available}}{{$item.classnum}}{{/if}}</td>
-                                                <td>{{if $item.classnum > 0}}
-                                                    <input id="schoolcar-{{$item.limitdata.id}}" type="number" min="0" step="1" value="{{$item.limitdata.limitnum|default:'0'}}" class="form-control text-center rounded shadow text-primary" style="width:200px; font-weight: bold; font-size: 1.2em;" onchange="schoolcars(this,'{{$item.limitdata.id}}');"{{if $item.available == '0'}} readonly{{/if}}>
-                                                    {{/if}}
-                                                </td>
                                             </tr>
                                         {{/foreach}}
                                     </tbody>
@@ -68,31 +63,12 @@ let schoolavailable = function(obj, id){
                 if(status=='0'){
                     trobj.classList.add('bg-secondary');
                     trobj.classList.add('text-info');
-                    $('#schoolcar-' + id).prop('readonly', true);
                 }else{
                     trobj.classList.remove('bg-secondary');
                     trobj.classList.remove('text-info');
-                    $('#schoolcar-' + id).prop('readonly', false);
                 }
             }
         }
     });    
-};
-let schoolcars = function(obj, id){
-    if(obj.value < 1){
-        obj.value = 0;
-    }
-    $.ajax({
-        url: "{{base_url('/ajaxfunc/schoolcar')}}/" + id + "/" + obj.value,
-        success: function(data){
-            res = data.split(',');
-            if(res[0]=='ok'){
-                obj.classList.add('border-primary');
-            }else{
-                obj.classList.add('border-danger');
-            }
-        }
-    });
-    
-};
+};    
 </script>

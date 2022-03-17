@@ -9,8 +9,7 @@
                     <div class="description pl-4">
                         <h5 class="title"><i class="bi bi-megaphone"></i> 活動目的</h5>
                         <p class="h5 text-danger">潮境智能海洋館將於 111 年 3 月 25
-                            日開幕，為了落實基隆市中小海洋教育政策，本館與基隆市政府教育處合作，於潮境智能海洋館試營運期間，開放特定場次予基隆市國中小之學校參觀，以激發及提升基隆市國中小學
-                            生多元化之海洋教育。</p>
+                            日開幕，為了落實基隆市中小海洋教育政策，國立海洋科技博物館與基隆市政府教育處合作，於潮境智能海洋館試營運期間，開放特定場次予基隆市國中小之學校參觀，以激發及提升基隆市國中小學生多元化之海洋教育。</p>
                     </div>
                 </div>
                 <div class="info info-horizontal info-hover-primary mt-5">
@@ -22,7 +21,7 @@
                 <div class="info info-horizontal info-hover-primary mt-5">
                     <div class="description pl-4">
                         <h5 class="title"><i class="bi bi-calendar-event"></i> 活動日期</h5>
-                        <p class="h5 text-warning">111 年 4 月 1 日-4 月 21 日、5 月 3 日-5 月 31 日，每周星期二-星期五。</p>
+                        <p class="h5 text-warning">111 年 4 月 1 日 - 4 月 21 日、5 月 3 日 - 5 月 31 日，每周星期二-星期五。</p>
                     </div>
                 </div>
                 <div class="info info-horizontal info-hover-primary mt-5">

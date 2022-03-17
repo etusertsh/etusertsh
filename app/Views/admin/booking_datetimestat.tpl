@@ -1,48 +1,43 @@
 <section class="section section-shaped section-lg">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-sm-12 mb-3">
-                <p class="h4 mb-2">{{$pagetitle}}</p>
+            <div class="col-sm-8 mb-3">
+                <p class="h4 text-center">{{$pagetitle}}</p>
             </div>
-            <div class="card border rounded shadow col-sm-12">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>日期</th>
-                                    <th>場次</th>
-                                    <th>填報情形</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{$predate = ''}}
-                                {{foreach key=key item=item from=$data}}
-                                    {{foreach key=key2 item=item2 from=$item}}
+            <div class="col-sm-4 mb-3 d-print-none">
+                <form name="form1" class="form" action="{{base_url('/booking/datetimestat')}}" method="post"
+                    accept-charset="utf-8">
+                    <label class="h5 text-priamry">選擇日期</label>
+                    <select name="itemdate" class="form-control" required
+                        onchange="if(this.selectedIndex>0){ document.form1.submit();}">
+                        <option value=""></option>
+                        {{foreach item=item from=$actiondays}}
+                            <option value="{{$item}}" {{if $item == $itemdate}} selected{{/if}}>{{$item}}</option>
+                        {{/foreach}}
+                    </select>
+                </form>
+            </div>
+            <div class="col-sm-10 mx-auto">
+                <div class="card border border-light rounded shadow-lg" style="min-height: 50vh;">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover h5">
+                                <thead>
+                                    <tr>
+                                        <th>學校名稱</th>
+                                        <th>參訪人數</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{foreach item=item from=$data}}
                                         <tr>
-                                            <td nowrap>
-                                                {{if $key != $predate}}
-                                                    {{$key|date_format:'%m/%d'}}
-                                                {{/if}}
-                                            </td>
-                                            <td nowrap>{{$actiontime.$key2.title}}</td>
-                                            <td>
-                                                {{$itemcount = array()}}
-                                                {{foreach item=item3 from=$item2}}
-                                                    <span
-                                                        class="badge badge-{{cycle values='primary,success,info,warning'}} mx-1 mb-2">{{$allschool[$item3.schoolid].schoolname}}：{{$item3.itemcode}}
-                                                        ({{$item3.num}})</span>
-                                                    {{$itemcount[$item3.itemcode] = $itemcount[$item3.itemcode] + $item3.num}}
-                                                {{/foreach}}
-                                                <p>{{foreach key=key4 item=item4 from=$itemcount}}（{{$key4}}：{{$item4}}）
-                                                    {{/foreach}}</p>
-                                            </td>
+                                            <td>{{$allschool[$item.schoolid].schoolfullname}}</td>
+                                            <td>{{$item.num}}</td>
                                         </tr>
-                                        {{$predate = $key}}
                                     {{/foreach}}
-                                {{/foreach}}
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

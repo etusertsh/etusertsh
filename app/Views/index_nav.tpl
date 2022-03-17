@@ -43,7 +43,7 @@
                             {{if $smarty.session.privilege>1}}
                             <a href="{{base_url('/booking/schoolstat')}}" class="dropdown-item border-top"><i class="bi bi-bar-chart"></i> 學校填報統計</a>
                             <a href="{{base_url('/booking/datetimestat')}}" class="dropdown-item "><i class="bi bi-geo-alt"></i> 場次填報統計</a>
-                            <a href="{{base_url('/booking/datetimenum')}}" class="dropdown-item "><i class="bi bi-geo-alt"></i> 車次人數填報統計</a>
+                            <!--<a href="{{base_url('/booking/datetimenum')}}" class="dropdown-item "><i class="bi bi-geo-alt"></i> 車次人數填報統計</a>-->
                             <a href="{{base_url('/admin/user/list')}}" class="dropdown-item "><i class="bi bi-people"></i> 使用者管理</a>
                             <a href="{{base_url('/admin/school/list')}}" class="dropdown-item"><i class="bi bi-building"></i> 學校管理</a>
                             <a href="{{base_url('/admin/itemmanager/list')}}" class="dropdown-item"><i class="bi bi-calendar-check"></i> 參訪展館場次管理</a>
