@@ -8,3 +8,9 @@ body{
     font-size: 11pt;
     line-height: 1.5em;
 }
+input:invalid {
+  border: 2px solid red;
+}
+input:valid {
+  border: 1px solid blue;
+}

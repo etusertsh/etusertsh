@@ -21,6 +21,7 @@
   <!-- Argon CSS -->
   <link type="text/css" href="{{base_url('assets')}}/css/argon-design-system.css" rel="stylesheet">
   <link type="text/css" href="{{base_url('assets')}}/css/style.css" rel="stylesheet">
+  <script src="{{base_url('assets')}}/js/core/jquery.min.js"></script>
 </head>
 </head>
 <body>

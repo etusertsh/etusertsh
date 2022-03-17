@@ -9,6 +9,7 @@ use App\Models\SchoolModel;
 use App\Models\UserModel;
 use App\Models\ItemModel;
 use App\Models\LimitModel;
+use App\Models\BookingModel;
 
 class Admin extends BaseController
 {
@@ -21,6 +22,7 @@ class Admin extends BaseController
 	protected $allschool;
 	protected $items;
 	protected $schoollimit;
+	protected $booking;
 	
 
 	public function __construct() {
@@ -30,6 +32,8 @@ class Admin extends BaseController
 		$this->user = new UserModel();
 		$this->school = new SchoolModel();
 		$this->schoollimit = new LimitModel();
+		$this->items = new ItemModel();
+		$this->booking = new BookingModel();
 
 		$this->nowparam = $this->param->getParam();
 		$this->allschool = $this->school->getAllSchool();
@@ -37,20 +41,24 @@ class Admin extends BaseController
 		$this->smarty->assign('allschool', $this->allschool);
 		$this->smarty->assign('privilegetext', $this->param->params);
     }	
-    public function index()
+    public function index($schoolid=null)
     {
         if($this->session->get('privilege')<1){
 			return redirect()->to(base_url());
 		}
-
-		$schoolid = $this->session->get('schoolid');
-		$limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
+		if($this->session->get('privilege')=='1'){
+			$schoolid = $this->session->get('schoolid');
+		}
+		if($schoolid == ''){
+			$schoolid = $this->session->get('schoolid');
+		}
+		$itemdata = $this->items->getItemFromYear($this->nowparam['actionyear']);
+		$bookingdata = $this->booking->getBookingFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid);
 		$this->smarty->assign('pagetitle','管理|填報');
 		$this->smarty->assign('schoolid', $schoolid);
-		$this->smarty->assign('limitdata', $limitdata);
+		$this->smarty->assign('itemdata', $itemdata);
+		$this->smarty->assign('bookingdata', $bookingdata);
 		$this->smarty->assign('actiondays', json_decode($this->nowparam['actiondays'], true));
-        $this->smarty->assign('actiontime', json_decode($this->nowparam['actiontime'], true));
-        $this->smarty->assign('actionplace', json_decode($this->nowparam['actionplace'], true));
         return $this->smarty->display('admin/admin.tpl');
     }
 	
@@ -367,10 +375,19 @@ class Admin extends BaseController
 		if($itemdate == '' || $itemtime == ''){
 			$func = 'item';
 			$pagetitle = '管理|參訪場館場次';
+			$data = $this->items->getItemFromYear($this->nowparam['actionyear']);
+			foreach($actiondays as $val){
+				if(!array_key_exists($val, $data)){
+					$sdata = ['itemdate'=>$val, 'limitnum'=>'200', 'booking'=>'0', 'remain'=>'200'];
+					$this->items->save($sdata);
+					$sdata['id']=$this->items->insertID();
+					$data[$val]=$sdata;
+				}
+			}
 		}else{
 			$func = 'item_list';
 			$pagetitle = '管理|參訪場館場次|' . $itemdate .'|' . $actiontime[$itemtime]['title'];
-			$data = $this->items->getItemFromDateAndTime($itemdate, $itemtime);
+			$data = $this->items->getItemFromYear($this->nowparam['actionyear']);
 		}
 		
 		$this->smarty->assign('data', $data);

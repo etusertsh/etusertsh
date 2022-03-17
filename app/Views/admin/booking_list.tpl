@@ -9,7 +9,7 @@
                 </p>
                 <p class="border border-default bg-secondary rounded p-3">已填報 <span id="schoolused"
                         class="badge badge-dark">{{$limitdata.used|default: '0'}}</span> 人。
-                        請依需求選擇各展館進行填報加減。</p>
+                        請依需求選擇各展館進行填報。</p>
             </div>
         </div>
         <h4 class="text-dark mb-3"><i class="bi bi-calendar-check"></i> {{$itemdate}} {{$actiontime.$itemtime.title}}
@@ -33,20 +33,11 @@
                                 <p class="text-primary">{{$item.description}}</p>
                             </div>
                             <div class="card-footer py-0">
-                                <p>Booking：<span class="h3"
-                                        id="booking-{{$item.itemcode}}">{{$schoolbooking[$item.itemcode].num|default:'-'}}</span>
-                                </p>
+                                <p>填報：</p>
+                                <input type="number" step="1" min="0" max="{{$item.remain}}" class="form-control text-center text-primary" value="{{$schoolbooking[$item.itemcode].num|default:'0'}}" style="font-weight:bold; font-size: 12pt;">
                                 <p class="text-right">
-                                    <button id="minusbtn-{{$item.itemcode}}" type="button" class="btn btn-danger mb-2"
-                                        onclick="tominus('{{$item.itemcode}}');"
-                                        style="display: {{if $schoolbooking[$item.itemcode].num > 0}}inline{{else}}none{{/if}};">－1</button>
-                                    <button id="plusbtn-{{$item.itemcode}}" type="button" class="btn btn-primary mx-2 mb-2"
-                                        onclick="toplus('{{$item.itemcode}}');"
-                                        style="display: {{if $limitdata.remain > 0 && $item.remain >0}}inline{{else}}none{{/if}};">＋1</button>
                                     <span class="badge badge-warning" id="full-{{$item.itemcode}}"
-                                        style="display: {{if $item.remain<=0}}inline{{else}}none{{/if}};">已額滿</span>
-                                    <span class="badge badge-info" id="runout-{{$item.itemcode}}"
-                                        style="display: {{if $limitdata.remain<=0}}inline{{else}}none{{/if}};">已無可用車輛單位</span>
+                                        style="display: {{if $item.remain<=0}}inline{{else}}none{{/if}};">已額滿</span>                                    
                                 </p>
                             </div>
                         </div>
@@ -107,37 +98,37 @@
             }
         };
         let showdata = function(data) {
-            $('#schoolused').text(data.limitdata.used);
-            $('#schoolremain').text(data.limitdata.remain);
+            //$('#schoolused').text(data.limitdata.used);
+            //$('#schoolremain').text(data.limitdata.remain);
             $.each(data.itemdata, function(i, item) {
                 thecode = item.itemcode;
                 if (item.remain > 0) {
                     $('#card-header-' + thecode).removeClass('bg-secondary');
                     $('#card-header-' + thecode).addClass('bg-success');
-                    $('#plusbtn-' + thecode).css('display', 'inline');
+                   // $('#plusbtn-' + thecode).css('display', 'inline');
                     $('#full-' + thecode).css('display', 'none');
                 } else {
                     $('#card-header-' + thecode).removeClass('bg-success');
                     $('#card-header-' + thecode).addClass('bg-secondary');
-                    $('#plusbtn-' + thecode).css('display', 'none');
+                   // $('#plusbtn-' + thecode).css('display', 'none');
                     $('#full-' + thecode).css('display', 'inline');
                 }
                 if (thecode in data.booking) {
                     $('#booking-' + thecode).text(data.booking[thecode].num);
-                    $('#minusbtn-' + thecode).css('display', 'inline');
+                    //$('#minusbtn-' + thecode).css('display', 'inline');
                 } else {
                     $('#booking-' + thecode).text('-');
-                    $('#minusbtn-' + thecode).css('display', 'none');
+                    //$('#minusbtn-' + thecode).css('display', 'none');
                 }
                 if (data.limitdata.remain <= 0) {
-                    $('#plusbtn-' + thecode).css('display', 'none');
-                    $('#runout-' + thecode).css('display', 'inline');
+                    //$('#plusbtn-' + thecode).css('display', 'none');
+                    //$('#runout-' + thecode).css('display', 'inline');
                 } else {
-                    $('#runout-' + thecode).css('display', 'none');
+                    //$('#runout-' + thecode).css('display', 'none');
                     if (item.remain > 0) {
-                        $('#plusbtn-' + thecode).css('display', 'inline');
+                        //$('#plusbtn-' + thecode).css('display', 'inline');
                     } else {
-                        $('#plusbtn-' + thecode).css('display', 'none');
+                        //$('#plusbtn-' + thecode).css('display', 'none');
                     }
                 }
                 $('#remain-' + thecode).text(item.remain);

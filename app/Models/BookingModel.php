@@ -52,10 +52,34 @@ class BookingModel extends Model
             return false;
         }
     }
+    public function getBookingFromYearAndSchoolid($year=null, $schoolid=null){
+        if($year>0 && $schoolid>0){
+            $data = array();
+            $res = $this->where('schoolid', $schoolid)->like('itemdate', '2022%')->orderBy('itemdate asc')->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['itemdate']]=$tmp;
+            }
+            return $data;
+        }else{
+            return false;
+        }
+    }
     public function getBookingFromSchoolidAndDateAndTime($schoolid=null, $itemdate=null, $itemtime=null){
         if($schoolid>0 && !empty($itemdate) && !empty($itemtime)){
             $data = array();
             $res = $this->where(['schoolid'=>$schoolid,'itemdate'=>$itemdate,'itemtime'=>$itemtime])->orderBy('itemcode asc')->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['itemcode']]=$tmp;
+            }
+            return $data;
+        }else{
+            return false;
+        }
+    }
+    public function getBookingFromSchoolidAndDateAndTimeAndCode($schoolid=null, $itemdate=null, $itemtime=null, $itemcode=null){
+        if($schoolid>0 && !empty($itemdate) && !empty($itemtime) && !empty($itemcode)){
+            $data = array();
+            $res = $this->where(['schoolid'=>$schoolid,'itemdate'=>$itemdate,'itemtime'=>$itemtime, 'itemcode'=>$itemcode])->findAll();
             foreach($res as $tmp){
                 $data[$tmp['itemcode']]=$tmp;
             }

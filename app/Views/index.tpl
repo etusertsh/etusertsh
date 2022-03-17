@@ -6,7 +6,7 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col-lg-6 text-center">
                         <img src="{{base_url('assets')}}/img/brand/main_logo.jpg">
-                        <h1 class="display-2">{{$nowparam.actionyear}}{{$nowparam.sitetitle}}</h1>
+                        <h1 class="display-2">{{$nowparam.actionyear}}<br>{{$nowparam.sitetitle}}</h1>
                         <div class="btn-wrapper mt-4">
                             {{if $smarty.session.privilege > 0}}
                                 <a href="{{base_url('/admin')}}"
@@ -28,4 +28,5 @@
         </div>
     </div>
 </div>
+{{include file='index_intro.tpl'}}
 {{include file='index_footer.tpl'}}

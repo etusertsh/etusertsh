@@ -98,7 +98,24 @@ class ItemModel extends Model
     }
     public function getItemFromDateAndTimeAndCode($itemdate=null, $itemtime=null, $code=null){
         if(!empty(esc($itemdate)) && !empty(esc($itemtime)) && !empty(esc($code))){
-            return $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime, 'itemcode'=>$code])->findAll();
+            $data = array();
+            $res = $this->where(['itemdate'=>$itemdate,'itemtime'=>$itemtime, 'itemcode'=>$code])->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['itemcode']] = $tmp;
+            }
+            return $data;
+        }else{
+            return false;
+        }
+    }
+    public function getItemFromYear($year=null){
+        if($year>0){
+            $data = array();
+            $res = $this->like('itemdate', $year . '%')->orderBy('itemdate')->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['itemdate']]=$tmp;
+            }
+            return $data;
         }else{
             return false;
         }

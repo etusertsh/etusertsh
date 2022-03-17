@@ -204,6 +204,19 @@ class Ajaxfunc extends BaseController
         'booking'=>$thebooking);
         return json_encode($data);
     }
+    public function booknum($schoolid=null, $itemdate=null, $itemtime=null, $itemcode=null, $itemnum=null){
+        if($schoolid>0 && !empty($itemdate) && !empty($itemtime) && !empty($itemcode) && $itemnum >= 0){
+            $itemdata = $this->items->getItemFromDateAndTimeAndCode($itemdate, $itemtime, $itemcode);
+            $limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
+            $thebooking = $this->booking->getBookingFromSchoolidAndDateAndTimeAndCode($schoolid,$itemdate,$itemtime,$itemcode);
+            if($itemdata[$itemcode]['remain'] > $itemnum){
+                $itemdata[$itemcode]['booking'] += $itemnum;
+                $itemdata[$itemcode]['remain'] = $itemdata[$itemcode]['limitnum'] - $itemdata[$itemcode]['booking'];
+                $this->items->save(['id'=>$itemdata[$itemcode]['id'], 'booking'=>$itemdata[$itemcode]['booking'], 'remain'=>$itemdata[$itemcode]['reamin']]);
+                
+            }
+        }
+    }
     public function bookminus($schoolid=null, $itemdate=null, $itemtime=null, $itemcode=null){
         if($schoolid>0 && !empty($itemdate) && !empty($itemtime) && !empty($itemcode)){
             $itemdata = $this->items->getItemFromDateAndTime($itemdate, $itemtime);

@@ -5,26 +5,31 @@
                 <p class="h5 text-primary">{{$pagetitle}}</p>
             </div>
         </div>
-        <h4>選擇日期場次</h4>
         <div class="row">
-            {{foreach item=item from=$actiondays}}
-                <div class="col-md-6 col-lg-4 p-2 mb-3">
-                    <div class="card border border-light rounded shadow">
-                        <div class="card-header">
-                            <p class="h5">{{$item.date}}</p>
-                        </div>
-                        <div class="card-body">
-                            {{foreach key=key2 item=item2 from=$actiontime}}
-                                {{if in_array($key2, $item.time)}}
-                                <a href="{{base_url('/admin/itemmanager/list')}}/{{$item.date}}/{{$key2}}" class="btn btn-lg btn-{{if $key2=='AM'}}warning{{else}}primary{{/if}} border border-danger mx-2 mb-2">{{$item2.title}} ({{$item2.time}})</a>
-                                {{else}}
-                                <button class="btn btn-lg btn-secondary mx-2 mb-2">{{$item2.title}} (不開放)</button>
-                                {{/if}}
-                            {{/foreach}}
-                        </div>
-                    </div>
-                </div>
-            {{/foreach}}
+            <div class="col-12">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr class="text-center">
+                            <th>序號</th>
+                            <th>日期</th>
+                            <th>人次上限</th>
+                            <th>已填報人數</th>
+                            <th>剩餘人數</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{foreach item=item from=$actiondays}}
+                            <tr class="h6 text-center">
+                                <td>{{counter}}</td>
+                                <td>{{$item}}</td>
+                                <td class="text-primary">{{$data[$item].limitnum}}</td>
+                                <td class="text-danger">{{$data[$item].booking}}</td>
+                                <td class="text-success">{{$data[$item].remain}}</td>
+                            </tr>
+                        {{/foreach}}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>

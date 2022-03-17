@@ -68,6 +68,12 @@
                         <span class="nav-link-inner--text">首頁</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-icon" href="{{base_url()}}#about" data-toggle="tooltip" title="關於">
+                        <i class="bi bi-bookmark"></i>
+                        <span class="nav-link-inner--text">關於</span>
+                    </a>
+                </li>
                 {{if $smarty.session.privilege > 0}}
                     <li class="nav-item">
                         <a class="nav-link nav-link-icon" href="{{base_url('/admin')}}" data-toggle="tooltip" title="填報">
