@@ -40,6 +40,13 @@ class BookingModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getBookingFromId($id){
+        if($id>0){
+            return $this->find($id);
+        }else{
+            return false;
+        }
+    }
     public function getBookingFromSchoolid($schoolid=null){
         if($schoolid>0){
             $data = array();

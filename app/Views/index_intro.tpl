@@ -27,7 +27,7 @@
                 <div class="info info-horizontal info-hover-primary mt-5">
                     <div class="description pl-4">
                         <h5 class="title"><i class="bi bi-clock"></i> 活動場次</h5>
-                        <p class="h5 text-info">上午第一場次(9 時-11 時)</p>
+                        <p class="h5 text-info">上午第一場次(9 時 - 11 時)</p>
                     </div>
                 </div>
                 <div class="info info-horizontal info-hover-primary mt-5">
@@ -35,7 +35,7 @@
                         <h5 class="title"><i class="bi bi-geo-alt"></i> 參訪地點</h5>
                         <ul class="h5 text-primary">
                             <li>免費參觀潮境智能海洋館，不含互動體驗休憩區。</li>
-                            <li>以學校為原則，於上述時程，以200人為限參觀。</li>
+                            <li>以學校為原則，於上述時程，每日以 200 人為限參觀。</li>
                         </ul>
                     </div>
                 </div>

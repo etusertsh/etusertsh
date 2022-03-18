@@ -133,13 +133,11 @@ class Ajaxfunc extends BaseController
             return 'error-nodata';
         }
     }
-    public function renew($schoolid=null,$itemdate=null,$itemtime=null){
-        if($schoolid>0 && !empty($itemdate) && !empty($itemtime)){
-            $itemdata = $this->items->getItemFromDateAndTime($itemdate, $itemtime);
-            $limitdata = $this->schoollimit->getLimitFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid)[0];
-            $thebooking = $this->booking->getBookingFromSchoolidAndDateAndTime($schoolid,$itemdate,$itemtime);
+    public function renew($schoolid=null){
+        if($schoolid>0){
+            $itemdata = $this->items->getItemFromYear($this->nowparam['actionyear']);
+            $thebooking = $this->booking->getBookingFromYearAndSchoolid($this->nowparam['actionyear'], $schoolid);
             $data=array('msg'=>'ok',
-            'limitdata'=>$limitdata,
             'itemdata'=>$itemdata,
             'booking'=>$thebooking);
         }

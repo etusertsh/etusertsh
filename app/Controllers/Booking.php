@@ -87,6 +87,17 @@ class Booking extends BaseController
 		$schoolid = intval(esc($schoolid));
 		$action = esc($action);
 		$id = intval(esc($id));
+		if($action == 'delete' && $id >0){
+			$bookingdata = $this->booking->getBookingFromId($id);
+			if($bookingdata['id']>0){
+				$itemdate = $bookingdata['itemdate'];
+				$itemdata = $this->items->getItemFromDate($itemdate);
+				$this->booking->delete($id);
+				$bookingsum = $this->booking->getSumFromDate($itemdate);
+				$this->items->save(['id'=>$itemdata['id'], 'booking'=>$bookingsum['num'], 'remain'=>($itemdata['limitnum']-$bookingsum['num'])]);
+				$this->smarty->assign('msg', ['type'=>'info', 'text'=>'填報項目已刪除，統計已更新！']);
+			}
+		}
 		$data = $this->booking->getBookingFromSchoolid($schoolid);
 		$this->smarty->assign('pagetitle','學校填報紀錄');
         $this->smarty->assign('func', 'status');
