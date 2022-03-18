@@ -26,6 +26,7 @@
                                     <tr>
                                         <th>學校名稱</th>
                                         <th>參訪人數</th>
+                                        <th>教師</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -33,6 +34,7 @@
                                         <tr>
                                             <td>{{$allschool[$item.schoolid].schoolfullname}}</td>
                                             <td>{{$item.num}}</td>
+                                            <th>{{$item.teacher}}</td>
                                         </tr>
                                     {{/foreach}}
                                 </tbody>

@@ -14,7 +14,7 @@ class BookingModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['schoolid','itemdate','itemtime','itemcode','num'];
+    protected $allowedFields    = ['schoolid','itemdate','itemtime','itemcode','num','uid'];
 
     // Dates
     protected $useTimestamps = true;

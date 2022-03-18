@@ -99,6 +99,9 @@ class Booking extends BaseController
 			}
 		}
 		$data = $this->booking->getBookingFromSchoolid($schoolid);
+		foreach($data as $key=>$val){
+			$data[$key]['teacher'] = $this->user->getUsernameFromId($val['uid']);
+		}
 		$this->smarty->assign('pagetitle','學校填報紀錄');
         $this->smarty->assign('func', 'status');
         $this->smarty->assign('data', $data);
@@ -110,9 +113,11 @@ class Booking extends BaseController
 			return redirect()->to(base_url());
 		}
 		$data = $this->booking->getSumBySchoolid();
+		$tdata = $this->user->getUserBySchoolid();
 		$this->smarty->assign('pagetitle','學校填報情形');
         $this->smarty->assign('func', 'schoolstat');
 		$this->smarty->assign('data', $data);
+		$this->smarty->assign('tdata', $tdata);
         return $this->smarty->display('admin/booking.tpl');
 	}
 	public function datetimestat(){
@@ -123,7 +128,10 @@ class Booking extends BaseController
 		$sdata = esc($this->request->getPost());
 		if(!empty($sdata['itemdate'])){		
 			$data = $this->booking->getBookingFromDate($sdata['itemdate']);
-		}
+			foreach($data as $key=>$val){
+				$data[$key]['teacher'] = $this->user->getUsernameFromId($val['uid']);
+			}
+		}		
 		$this->smarty->assign('pagetitle',$sdata['itemdate'] . '學校參訪人數表');
         $this->smarty->assign('func', 'datetimestat');
 		$this->smarty->assign('actiondays', $actiondays);
@@ -176,14 +184,15 @@ class Booking extends BaseController
 			}elseif($sdata['num']>0){
 				if($sdata['num'] > $bookingdata['num']){
 					if($itemdata['remain'] >= ($sdata['num']-$bookingdata['num'])){
-						$this->booking->save(['id'=>$bookingdata['id'], 'num'=>$sdata['num']]);
+						$this->booking->save(['id'=>$bookingdata['id'], 'num'=>$sdata['num'], 'uid'=>$this->session->get('user_id')]);
 					}
 				}else{
-					$this->booking->save(['id'=>$bookingdata['id'], 'num'=>$sdata['num']]);
+					$this->booking->save(['id'=>$bookingdata['id'], 'num'=>$sdata['num'], 'uid'=>$this->session->get('user_id')]);
 				}
 			}
 		}else{
 			if($sdata['num']>0){
+				$sdata['uid'] = $this->session->get('user_id');
 				if($itemdata['remain'] >= $sdata['num']){
 					$this->booking->save($sdata);
 				}

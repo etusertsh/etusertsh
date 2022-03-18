@@ -20,6 +20,7 @@
                                     <th>場次</th>
                                     <th>參訪展館</th>
                                     <th nowrap>參訪人數</th>
+                                    <th>填報教師</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -30,6 +31,7 @@
                                         <td nowrap>上午第一場次(9 時-11 時)</td>
                                         <td class="text-primary" nowrap>潮境智能海洋館</td>
                                         <td class="text-danger h4">{{$item.num}}</td>
+                                        <td>{{$item.teacher}}</td>
                                         <td nowrap>
                                             {{if $signable}}
                                                 <button type="button" class="btn btn-danger d-print-none" onclick="if(confirm('確定刪除本填報紀錄？一旦刪除將無法恢復，需重新填報！')){self.location='{{base_url('/booking/status')}}/{{$schoolid}}/delete/{{$item.id}}';}"><i class="bi bi-trash"></i></button>

@@ -59,6 +59,9 @@ class UserModel extends Model
 		$tmp = $this->find($id);
 		return $tmp;
 	}
+    public function getUsernameFromId($id){
+        return $this->find($id)['realname'];
+    }
     public function checkLogin($email, $pw){
 		if(empty($email) || empty($pw)){
 			return false;
@@ -91,5 +94,16 @@ class UserModel extends Model
             return false;
         }
         return false;
+    }
+    public function getOneUserFromSchoolid($schoolid){
+        return $this->where('schoolid', $schoolid)->orderBy('id desc')->findAll(1,0)[0];
+    }
+    public function getUserBySchoolid(){
+        $data = array();
+        $res = $this->orderBy('schoolid asc, id asc')->findAll();
+        foreach($res as $tmp){
+            $data[$tmp['schoolid']][] = $tmp;
+        }
+        return $data;
     }
 }
