@@ -148,7 +148,7 @@
         };
 
         window.onload = function() {
-            //setInterval(renew, 5000);
+            //setInterval(renew, 10000);
         };
     </script>
 {{/if}}

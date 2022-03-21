@@ -90,10 +90,12 @@
         bookingnum = parseInt($('#booking_' + thedate).text());
         limitnum = parseInt($('#remain_' + thedate).text()) + bookingnum;
         $('#limitnum').text(limitnum);
+        $('#limitnum').html(limitnum);
         $('#num').val(bookingnum);
         $('#num').attr('max', limitnum);
         $('#num').attr('readonly', false);
         renew();
+        setInterval(renew, 5000);
     };
 
     let renew = function() {
@@ -109,14 +111,20 @@
         });
     };
     let showdata = function(data){
-        $.each(data.booking, function(i, item){
-            if($("#booking_" + i).length){
-                $("#booking_" + i).text(item.num);                
-            }
+        $(".badge-success").each(function(){
+            thedate = $(this).attr('id').split('_')[1];
+            if(data.booking[thedate]){
+                $("#booking_" + thedate).text(data.booking[thedate].num);
+                $("#booking_" + thedate).html(data.booking[thedate].num);
+            }else{
+                $("#booking_" + thedate).text('0');
+                $("#booking_" + thedate).html('0');
+            }            
         });
         $.each(data.itemdata, function(i, item){            
             if($("#remain_" + i).length){
-                $("#remain_" + i).text(item.remain);                
+                $("#remain_" + i).text(item.remain); 
+                $("#remain_" + i).html(item.remain);               
                 if(item.remain == '0'){
                     $("#card_" + i).addClass('bg-info');
                 }else{
@@ -128,11 +136,12 @@
             bookingnum = parseInt($('#booking_' + nowdate).text());
             limitnum = parseInt($('#remain_' + nowdate).text()) + bookingnum;
             $('#limitnum').text(limitnum);
+            $('#limitnum').html(limitnum);
             $('#num').attr('max', limitnum);
             $('#num').attr('readonly', false);
         }
     };
-    window.onload = function() {
-            setInterval(renew, 5000);
-    };
+    /*window.onload = function() {
+            setInterval(renew, 10000);
+    };*/
 </script>
