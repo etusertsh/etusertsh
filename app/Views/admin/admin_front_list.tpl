@@ -1,6 +1,7 @@
 <div class="row">
+	{{$var = 8 - $smarty.now|date_format:"%w"}}
     <div class="col-sm-12 alert alert-info rounded shadow">
-        <p class="h6">因需於一週前回報海科館相關參訪人次，故僅可填報7日後場次。<br>請點選欲填報的日期，於填報區中填入預計參訪的人數，點選送出即可。</p>
+        <p class="h6">因需於一週前回報海科館相關參訪人次，故僅可填報 {{$var}} 日後場次。<br>請點選欲填報的日期，於填報區中填入預計參訪的人數，點選送出即可。</p>
     </div>
     <div class="col-md-9 col-sm-12">
         <div class="row my-2">
@@ -24,7 +25,8 @@
                     <div class="card-body text-center text-white h5 m-0">星期五</div>
                 </div>
             </div>
-            {{$limitdate = "+7 days"|strtotime|date_format:"%Y%m%d"}}
+			
+            {{$limitdate = "+$var days"|strtotime|date_format:"%Y%m%d"}}
             {{$preweek=''}}
             {{foreach item=item from=$actiondays}}
                 {{$plandate = $item|date_format:"%Y%m%d"}}

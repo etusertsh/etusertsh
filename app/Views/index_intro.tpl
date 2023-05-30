@@ -21,7 +21,7 @@
                 <div class="info info-horizontal info-hover-primary mt-5">
                     <div class="description pl-4">
                         <h5 class="title"><i class="bi bi-calendar-event"></i> 活動日期</h5>
-                        <p class="h5 text-warning">111 年 4 月 1 日 - 4 月 21 日、5 月 3 日 - 5 月 31 日，每周星期二-星期五。</p>
+                        <p class="h5 text-warning">111 年 3 月 25 日 - 4 月 21 日，每周星期二-星期五。</p>
                     </div>
                 </div>
                 <div class="info info-horizontal info-hover-primary mt-5">

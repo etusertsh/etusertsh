@@ -15,6 +15,7 @@
                             <th>人次上限</th>
                             <th>已填報人數</th>
                             <th>剩餘人數</th>
+							<th>明細</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -25,6 +26,7 @@
                                 <td class="text-primary">{{$data[$item].limitnum}}</td>
                                 <td class="text-danger">{{$data[$item].booking}}</td>
                                 <td class="text-success">{{$data[$item].remain}}</td>
+								<td>{{if $data[$item].booking > 0}}<a href="{{base_url('/booking/datetimestat')}}/{{$item}}"><i class="bi bi-search"></i></a>{{/if}}</td>
                             </tr>
                         {{/foreach}}
                     </tbody>

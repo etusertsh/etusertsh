@@ -82,6 +82,7 @@
                                 {{csrf_field()}}
                             </div>
                         </form>
+						{{print_r($smarty.session)}}
                     </div>
                 </div>
             </div>

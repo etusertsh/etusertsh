@@ -120,23 +120,27 @@ class Booking extends BaseController
 		$this->smarty->assign('tdata', $tdata);
         return $this->smarty->display('admin/booking.tpl');
 	}
-	public function datetimestat(){
+	public function datetimestat($itemdate = null){
 		if($this->session->get('privilege')<2){
 			return redirect()->to(base_url());
 		}
+		$itemdate = esc($itemdate);
 		$actiondays = json_decode($this->nowparam['actiondays'], true);
 		$sdata = esc($this->request->getPost());
-		if(!empty($sdata['itemdate'])){		
-			$data = $this->booking->getBookingFromDate($sdata['itemdate']);
+		if(!empty($sdata['itemdate'])){	
+			$itemdate = $sdata['itemdate'];			
+		}
+		if(!empty($itemdate)){
+			$data = $this->booking->getBookingFromDate($itemdate);
 			foreach($data as $key=>$val){
 				$data[$key]['teacher'] = $this->user->getUsernameFromId($val['uid']);
 			}
-		}		
-		$this->smarty->assign('pagetitle',$sdata['itemdate'] . '學校參訪人數表');
+		}
+		$this->smarty->assign('pagetitle',$itemdate . '學校參訪人數表');
         $this->smarty->assign('func', 'datetimestat');
 		$this->smarty->assign('actiondays', $actiondays);
 		$this->smarty->assign('data', $data);
-		$this->smarty->assign('itemdate', $sdata['itemdate']);
+		$this->smarty->assign('itemdate', $itemdate);
         return $this->smarty->display('admin/booking.tpl');
 	}
 	public function datetimenum(){

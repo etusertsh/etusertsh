@@ -76,6 +76,7 @@ class GoogleOauth
 		//$this->client->authenticate($_GET['code']);
 
 		//$accessToken = $this->client->getAccessToken();
+		$_SESSION['code'] = $_GET['code'];
 		$accessToken = $this->client->fetchAccessTokenWithAuthCode($_GET['code']);
 
 		$this->client->setAccessToken($accessToken);
