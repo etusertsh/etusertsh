@@ -23,8 +23,8 @@
                     <div class="card-body text-center row" id="card-body_{{$item}}">
                         <div class="col-md-6 col-sm-12">
                             <a href="#signup" value="{{$item|date_format:'%m/%d'}}"
-                                class="btn btn-lg btn-primary rounded mb-1"
-                                onclick="selectdate('{{$item}}');">{{$item|date_format:'%m/%d'}}</a>
+                                class="btn btn-lg btn-info rounded mb-1"
+                                onclick="selectdate('{{$item}}');"><span class="h6 text-white">{{$item|date_format:'%m/%d'}}<br>{{$nowparam.weeknames.$planweek}}</span></a>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             剩餘：<span class="badge badge-success mb-1"

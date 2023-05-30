@@ -42,7 +42,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="https://www.klcg.gov.tw/tw/education" class="nav-link" target="_blank">教育處</a>
-                    </li>                    
+                    </li>
                 </ul>
             </div>
         </div>
@@ -54,9 +54,17 @@
 <script src="{{base_url('assets')}}/js/core/bootstrap.min.js"></script>
 
 <!-- Optional plugins -->
-<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+<!--<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>-->
 <!-- Argon JS -->
 <script src="{{base_url('assets')}}/js/argon-design-system.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+    WebFont.load({
+        google: {
+            families: ['Noto Sans TC', 'Droid Sans']
+        }
+    });
+</script>
 </body>
 
 </html>

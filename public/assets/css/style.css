@@ -4,7 +4,7 @@
     src: url("jf-openhuninn.ttf");
   }
 body{
-    font-family: "Roboto", Lato, Arial, "微軟正黑體", "LiHei Pro",  "Open Sans", "Noto Sans TC", sans-serif;
+    font-family: "Roboto", Lato, Arial,'Noto Sans TC', "微軟正黑體", "LiHei Pro",  "Open Sans", "Noto Sans TC", sans-serif;
     font-size: 11pt;
     line-height: 1.5em;
 }
