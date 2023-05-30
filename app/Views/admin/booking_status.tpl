@@ -1,3 +1,5 @@
+{{$bookingtime = '上午10:30-12:00'}}
+{{$bookingplace = '年度特展及文薈館'}}
 <section class="section section-shaped section-lg">
     <div class="container">
         <div class="row justify-content-center">
@@ -28,8 +30,8 @@
                                 {{foreach item=item from=$data}}
                                     <tr>
                                         <td nowrap>{{$item.itemdate}}</td>
-                                        <td nowrap>上午第一場次(9 時-11 時)</td>
-                                        <td class="text-primary" nowrap>潮境智能海洋館</td>
+                                        <td nowrap>{{$bookingtime}}</td>
+                                        <td class="text-primary" nowrap>{{$bookingplace}}</td>
                                         <td class="text-danger h4">{{$item.num}}</td>
                                         <td>{{$item.teacher}}</td>
                                         <td nowrap>

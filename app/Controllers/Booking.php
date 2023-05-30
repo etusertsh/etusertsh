@@ -112,7 +112,7 @@ class Booking extends BaseController
 		if($this->session->get('privilege')<2){
 			return redirect()->to(base_url());
 		}
-		$data = $this->booking->getSumBySchoolid();
+		$data = $this->booking->getSumBySchoolidFromYear($this->nowparam['actionyear']);
 		$tdata = $this->user->getUserBySchoolid();
 		$this->smarty->assign('pagetitle','學校填報情形');
         $this->smarty->assign('func', 'schoolstat');

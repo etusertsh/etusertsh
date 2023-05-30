@@ -46,12 +46,15 @@ class ParamModel extends Model
         '0'=>'未啟用','1'=>'學校承辦','2'=>'教育行政','3'=>'系統管理'
     );
 
+    protected $weeknames = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+
     public function getParam(){
         $data = array();
         $res = $this->findAll();
         foreach($res as $tmp){
             $data[$tmp['name']]=$tmp['value'];
         }
+        $data['weeknames'] = $this->weeknames;
         return $data;
     }
     public function getPrivilege(){

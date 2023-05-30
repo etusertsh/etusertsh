@@ -62,7 +62,7 @@ class BookingModel extends Model
     public function getBookingFromYearAndSchoolid($year=null, $schoolid=null){
         if($year>0 && $schoolid>0){
             $data = array();
-            $res = $this->where('schoolid', $schoolid)->like('itemdate', '2022%')->orderBy('itemdate asc')->findAll();
+            $res = $this->where('schoolid', $schoolid)->like('itemdate', "$year%")->orderBy('itemdate asc')->findAll();
             foreach($res as $tmp){
                 $data[$tmp['itemdate']]=$tmp;
             }
@@ -145,6 +145,18 @@ class BookingModel extends Model
             $data[$tmp['schoolid']]=$tmp;
         }
         return $data;
+    }
+    public function getSumBySchoolidFromYear($year=null){
+        if($year>0){
+            $data = array();
+            $res = $this->selectSum('num')->select('schoolid')->like('itemdate',"$year%")->groupBy('schoolid')->findAll();
+            foreach($res as $tmp){
+                $data[$tmp['schoolid']]=$tmp;
+            }
+            return $data;
+        }else{
+            return false;
+        }
     }
     public function getSumFromDate($itemdate=null){
         if(!empty($itemdate)){
