@@ -43,6 +43,7 @@
                 </div>
             </div>
             <div class="col-lg-5 col-10 mx-md-auto">
+                
                 <img class="ml-lg-5" src="{{base_url('assets')}}/img/bankbg.jpg" width="100%">
             </div>
         </div>

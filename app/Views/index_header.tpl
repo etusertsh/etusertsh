@@ -16,7 +16,7 @@
   <link href="{{base_url('assets')}}/css/nucleo-icons.css" rel="stylesheet">
   <!--<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css">
 
   <!-- Argon CSS -->
   <link type="text/css" href="{{base_url('assets')}}/css/argon-design-system.css" rel="stylesheet">

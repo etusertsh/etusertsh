@@ -54,7 +54,7 @@
 <script src="{{base_url('assets')}}/js/core/bootstrap.min.js"></script>
 
 <!-- Optional plugins -->
-<!--<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>-->
+<script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
 <!-- Argon JS -->
 <script src="{{base_url('assets')}}/js/argon-design-system.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
