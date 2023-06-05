@@ -1,3 +1,4 @@
+<script src="{{base_url('assets')}}/js/0H9PttM4tRKh/ckfinder.js"></script>
 <section class="section section-shaped section-lg">
     <div class="container pt-lg-5">
         <div class="row justify-content-center">
@@ -82,10 +83,35 @@
                                 {{csrf_field()}}
                             </div>
                         </form>
-						{{print_r($smarty.session)}}
+                        <form class="form mb-3" name="form5" action="{{base_url('/admin/param/updatefrontparams')}}"
+                            method="POST">
+                            <div class="form-group">
+                                <label>首頁橫幅</label>
+                                <input type="text" name="front_banner" id="front_banner" class="form-control" required autocomplete="off" value="{{$data.front_banner}}" onclick="selectFileWithCKFinder('front_banner', 'preview-banner');">
+                                <img src="{{$data.front_banner}}" id="preview-banner" class="img-thumbnail">
+                            </div>
+                            <div class="form-group mb-3 text-center">
+                                <button type="submit" class="btn btn-primary">更新</button>
+                                {{csrf_field()}}
+                            </div>
+                        </form>
+                        <form class="form mb-3" name="form5" action="{{base_url('/admin/param/updatefrontparams')}}"
+                            method="POST">
+                            <div class="form-group">
+                                <label>首頁形象圖</label>
+                                <input type="text" name="front_img" id="front_img" class="form-control" required autocomplete="off" value="{{$data.front_img}}" onclick="selectFileWithCKFinder('front_img', 'preview-img');">
+                                <img src="{{$data.front_img}}" id="preview-img" class="img-thumbnail">
+                            </div>
+                            <div class="form-group mb-3 text-center">
+                                <button type="submit" class="btn btn-primary">更新</button>
+                                {{csrf_field()}}
+                            </div>
+                        </form>
+						{{*print_r($smarty.session)*}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<script src="{{base_url('assets')}}/js/editor_func.js"></script>

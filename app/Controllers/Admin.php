@@ -312,6 +312,28 @@ class Admin extends BaseController
 					return redirect()->to(base_url('/admin'));
 				}
 				break;
+			case 'updatefrontparams':
+				$sdata = $this->request->getPost();
+				if($sdata['front_banner'] != ''){
+					$this->param->set(['value'=>$sdata['front_banner']])->where('name','front_banner')->update();
+					$this->smarty->assign('msg',['type'=>'primary','text'=>'系統參數已更新！']);
+					$data = $this->param->getParam();
+					$this->nowparam = $data;
+					$this->smarty->assign('nowparam', $this->nowparam);
+					$func = 'param_list';
+					$pagetitle = '管理|系統參數';
+				}elseif($sdata['front_img'] != ''){
+					$this->param->set(['value'=>$sdata['front_img']])->where('name','front_img')->update();
+					$this->smarty->assign('msg',['type'=>'primary','text'=>'系統參數已更新！']);
+					$data = $this->param->getParam();
+					$this->nowparam = $data;
+					$this->smarty->assign('nowparam', $this->nowparam);
+					$func = 'param_list';
+					$pagetitle = '管理|系統參數';
+				}else{
+					return redirect()->to(base_url('/admin'));
+				}
+				break;
 			default:
 				return redirect()->to(base_url('/admin'));
 				break;
